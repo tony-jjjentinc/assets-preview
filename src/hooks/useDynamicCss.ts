@@ -11,10 +11,11 @@ export const useDynamicCss = (defaultGroup: string = 'admin') => {
       linkElement = document.createElement('link');
       linkElement.id = linkId;
       linkElement.rel = 'stylesheet';
+      linkElement.href = `https://tony-jjjentinc.github.io/assets/colors/${group}.css?v=${Date.now()}`;
       document.head.appendChild(linkElement);
+    } else {
+      linkElement.href = `https://tony-jjjentinc.github.io/assets/colors/${group}.css?v=${Date.now()}`;
     }
-
-    linkElement.href = `https://tony-jjjentinc.github.io/assets/colors/${group}.css?v=${Date.now()}`;
   }, [group]);
 
   return [group, setGroup] as const;

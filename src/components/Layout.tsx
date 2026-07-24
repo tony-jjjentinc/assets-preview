@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
-import { FloatingToolbar } from './FloatingToolbar';
+import MobileHeader from './MobileHeader';
 
 const Layout: React.FC = () => {
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+
   return (
-    <div className="d-flex w-100 h-100">
-      <Sidebar />
-      <div className="flex-grow-1 p-3 overflow-auto">
-        <Outlet />
+    <div className="d-flex flex-column h-100 w-100">
+      <MobileHeader toggleSidebar={() => setIsMobileOpen(prev => !prev)} />
+      <div className="d-flex flex-grow-1 overflow-hidden">
+        <Sidebar isMobileOpen={isMobileOpen} onClose={() => setIsMobileOpen(false)} />
+        <div className="flex-grow-1 overflow-auto bg-body-tertiary">
+          <Outlet />
+        </div>
       </div>
-      <FloatingToolbar />
     </div>
   );
 };

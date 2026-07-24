@@ -1,14 +1,16 @@
-import React from 'react';
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import ComponentPreview from './pages/ComponentPreview';
 import ImagePreview from './pages/ImagePreview';
 import PatternPreview from './pages/PatternPreview';
 import TypographyPreview from './pages/TypographyPreview';
+import { FloatingToolbar } from './components/FloatingToolbar';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/assets-preview/">
+      <FloatingToolbar />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<ComponentPreview />} />

@@ -1,305 +1,112 @@
 import React, { useState } from 'react';
 
-const PATTERNS = [
-  'bubbles.svg',
-  'circuit-board.svg',
-  'diagonal-lines.svg',
-  'diagonal-stripes.svg',
-  'hexagons.svg',
-  'texture.svg',
-  'topography.svg',
-];
+const PATTERN_CONFIG: Record<string, number> = {
+  'bubbles.svg': 150,
+  'circuit-board.svg': 300,
+  'diagonal-lines.svg': 60,
+  'diagonal-stripes.svg': 80,
+  'hexagons.svg': 120,
+  'texture.svg': 400,
+  'topography.svg': 500,
+};
+const PATTERNS = Object.keys(PATTERN_CONFIG);
 
 const BASE_URL = 'https://tony-jjjentinc.github.io/assets/images/misc/background-pattern/';
 
+const getLuminance = (hex: string) => { const r = parseInt(hex.slice(1, 3), 16)/255, g = parseInt(hex.slice(3, 5), 16)/255, b = parseInt(hex.slice(5, 7), 16)/255; const a = [r, g, b].map(v => v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4)); return a[0]*0.2126 + a[1]*0.7152 + a[2]*0.0722; };
+
 const PatternPreview: React.FC = () => {
-  const [containerBgColor, setContainerBgColor] = useState('#0f172a');
-  const [patternColor, setPatternColor] = useState('#38bdf8');
-  const [patternSize, setPatternSize] = useState(120);
+  const [containerBgColor, setContainerBgColor] = useState('#f8f9fa');
+  const [patternColor, setPatternColor] = useState('#0d6efd');
+  const [patternSize, setPatternSize] = useState(PATTERN_CONFIG[PATTERNS[0]]);
   const [selectedPattern, setSelectedPattern] = useState(PATTERNS[0]);
 
+  const handlePatternChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newPattern = e.target.value;
+    setSelectedPattern(newPattern);
+    setPatternSize(PATTERN_CONFIG[newPattern]);
+  };
+
+  const isDark = getLuminance(containerBgColor) < 0.5; const txt = isDark ? 'text-white' : 'text-dark'; const glass = isDark ? 'bg-dark bg-opacity-50 border-light' : 'bg-white bg-opacity-50 border-dark';
+
   return (
-    <>
-      <style>
-        {`
-          .pattern-studio-layout {
-            display: grid;
-            grid-template-columns: minmax(300px, 350px) 1fr;
-            gap: 40px;
-            align-items: start;
-          }
-          @media (max-width: 900px) {
-            .pattern-studio-layout {
-              grid-template-columns: 1fr;
-            }
-          }
-          .custom-select:focus {
-            border-color: #38bdf8 !important;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-          }
-          .color-picker-input {
-            appearance: none;
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            background: none;
-            border: 0;
-            cursor: pointer;
-            padding: 0;
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-          }
-          .color-picker-input::-webkit-color-swatch-wrapper {
-            padding: 0;
-          }
-          .color-picker-input::-webkit-color-swatch {
-            border: none;
-            border-radius: 12px;
-          }
-          .color-picker-input::-moz-color-swatch {
-            border: none;
-            border-radius: 12px;
-          }
-          .range-slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-            outline: none;
-          }
-          .range-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #38bdf8;
-            cursor: pointer;
-            transition: background 0.15s ease-in-out;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-          }
-          .range-slider::-webkit-slider-thumb:hover {
-            background: #7dd3fc;
-          }
-          .range-slider::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border: 0;
-            border-radius: 50%;
-            background: #38bdf8;
-            cursor: pointer;
-            transition: background 0.15s ease-in-out;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-          }
-          .range-slider::-moz-range-thumb:hover {
-            background: #7dd3fc;
-          }
-        `}
-      </style>
-      <div style={{
-        fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
-        minHeight: '100vh',
-        backgroundColor: '#020617',
-        color: '#f8fafc',
-        padding: '5%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        boxSizing: 'border-box'
-      }}>
-        <div style={{
-          maxWidth: '1400px',
-          width: '100%',
-        }}>
-          <header style={{ marginBottom: '50px', textAlign: 'center' }}>
-            <h1 style={{
-              fontSize: '3.5rem',
-              fontWeight: '800',
-              background: 'linear-gradient(135deg, #38bdf8 0%, #818cf8 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              marginBottom: '16px',
-              letterSpacing: '-0.02em',
-              lineHeight: '1.2'
-            }}>
-              Pattern Studio
-            </h1>
-            <p style={{ color: '#94a3b8', fontSize: '1.2rem', maxWidth: '600px', margin: '0 auto', lineHeight: '1.6' }}>
-              Interactive showcase of dynamic SVG patterns using CSS masks for seamless colorization and scaling.
-            </p>
-          </header>
+    <div className="position-relative min-vh-100 d-flex flex-column align-items-center justify-content-center overflow-hidden w-100" style={{
+      backgroundColor: containerBgColor,
+      fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
+      boxSizing: 'border-box',
+      transition: 'background-color 0.4s ease'
+    }}>
+      <div 
+        className="position-absolute top-0 start-0 w-100 h-100"
+        style={{
+          zIndex: 0,
+          backgroundColor: patternColor,
+          WebkitMaskImage: `url('${BASE_URL}${selectedPattern}')`,
+          maskImage: `url('${BASE_URL}${selectedPattern}')`,
+          WebkitMaskSize: `${patternSize}px`,
+          maskSize: `${patternSize}px`,
+          WebkitMaskRepeat: 'repeat',
+          maskRepeat: 'repeat',
+          transition: 'background-color 0.4s ease, -webkit-mask-size 0.3s ease, mask-size 0.3s ease'
+        }}
+      />
 
-          <div className="pattern-studio-layout">
-            {/* Control Panel */}
-            <div style={{
-              backgroundColor: 'rgba(30, 41, 59, 0.6)',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              borderRadius: '24px',
-              padding: '32px',
-              border: '1px solid rgba(255, 255, 255, 0.08)',
-              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.4)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '28px'
-            }}>
-              <h2 style={{ 
-                fontSize: '1.4rem', 
-                fontWeight: '600', 
-                margin: 0, 
-                color: '#e2e8f0',
-                borderBottom: '1px solid rgba(255,255,255,0.1)',
-                paddingBottom: '16px'
-              }}>Controls</h2>
-              
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <label style={{ fontSize: '0.9rem', color: '#cbd5e1', fontWeight: '500' }}>Container Background</label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <input 
-                    type="color" 
-                    value={containerBgColor} 
-                    onChange={(e) => setContainerBgColor(e.target.value)} 
-                    className="color-picker-input"
-                  />
-                  <span style={{ 
-                    fontFamily: 'monospace', 
-                    color: '#94a3b8', 
-                    fontSize: '1.1rem',
-                    backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                    padding: '8px 12px',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(255,255,255,0.05)'
-                  }}>
-                    {containerBgColor.toUpperCase()}
-                  </span>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <label style={{ fontSize: '0.9rem', color: '#cbd5e1', fontWeight: '500' }}>Pattern Color</label>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                  <input 
-                    type="color" 
-                    value={patternColor} 
-                    onChange={(e) => setPatternColor(e.target.value)} 
-                    className="color-picker-input"
-                  />
-                  <span style={{ 
-                    fontFamily: 'monospace', 
-                    color: '#94a3b8', 
-                    fontSize: '1.1rem',
-                    backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                    padding: '8px 12px',
-                    borderRadius: '8px',
-                    border: '1px solid rgba(255,255,255,0.05)'
-                  }}>
-                    {patternColor.toUpperCase()}
-                  </span>
-                </div>
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <label style={{ fontSize: '0.9rem', color: '#cbd5e1', fontWeight: '500' }}>
-                    Pattern Size
-                  </label>
-                  <span style={{ fontSize: '0.9rem', color: '#38bdf8', fontWeight: '600' }}>{patternSize}px</span>
-                </div>
-                <input 
-                  type="range" 
-                  min="20" 
-                  max="400" 
-                  value={patternSize} 
-                  onChange={(e) => setPatternSize(Number(e.target.value))} 
-                  className="range-slider"
-                />
-              </div>
-
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <label style={{ fontSize: '0.9rem', color: '#cbd5e1', fontWeight: '500' }}>Select Pattern</label>
-                <div style={{ position: 'relative' }}>
-                  <select 
-                    value={selectedPattern} 
-                    onChange={(e) => setSelectedPattern(e.target.value)}
-                    className="custom-select"
-                    style={{
-                      appearance: 'none',
-                      width: '100%',
-                      padding: '14px 16px',
-                      backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                      color: '#e2e8f0',
-                      border: '1px solid rgba(255, 255, 255, 0.1)',
-                      borderRadius: '12px',
-                      outline: 'none',
-                      fontSize: '1rem',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                    }}
-                  >
-                    {PATTERNS.map(pattern => (
-                      <option key={pattern} value={pattern}>
-                        {pattern.replace('.svg', '').replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                      </option>
-                    ))}
-                  </select>
-                  <div style={{
-                    position: 'absolute',
-                    right: '16px',
-                    top: '50%',
-                    transform: 'translateY(-50%)',
-                    pointerEvents: 'none',
-                    color: '#94a3b8',
-                    fontSize: '0.8rem'
-                  }}>
-                    ▼
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Preview Area */}
-            <div style={{
-              position: 'relative',
-              width: '100%',
-              minHeight: '600px',
-              height: '100%',
-              backgroundColor: containerBgColor,
-              borderRadius: '32px',
-              overflow: 'hidden',
-              boxShadow: '0 30px 60px -15px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.05)',
-              transition: 'background-color 0.4s ease'
-            }}>
-              <div 
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  backgroundColor: patternColor,
-                  WebkitMaskImage: `url('${BASE_URL}${selectedPattern}')`,
-                  maskImage: `url('${BASE_URL}${selectedPattern}')`,
-                  WebkitMaskSize: `${patternSize}px`,
-                  maskSize: `${patternSize}px`,
-                  WebkitMaskRepeat: 'repeat',
-                  maskRepeat: 'repeat',
-                  transition: 'background-color 0.4s ease, -webkit-mask-size 0.3s ease, mask-size 0.3s ease'
-                }}
-              />
-              {/* Vignette Overlay for depth */}
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.6) 150%)',
-                pointerEvents: 'none'
-              }} />
-            </div>
+      <div className="position-relative" style={{ zIndex: 1, width: '100%', maxWidth: '800px', padding: '2rem' }}>
+        <div className={`d-flex flex-row flex-wrap align-items-center justify-content-center gap-4 p-3 px-4 rounded-pill shadow-lg border border-opacity-25 ${glass}`} style={{ backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
+          
+          <div className="d-flex align-items-center gap-2">
+            <label className={`form-label small fw-medium mb-0 ${txt}`}>Background</label>
+            <input 
+              type="color" 
+              value={containerBgColor} 
+              onChange={(e) => setContainerBgColor(e.target.value)} 
+              className="form-control form-control-color border-0 shadow-sm p-1 bg-white bg-opacity-50"
+              style={{ width: '32px', height: '32px', borderRadius: '50%' }}
+            />
           </div>
+
+          <div className="d-flex align-items-center gap-2">
+            <label className={`form-label small fw-medium mb-0 ${txt}`}>Pattern</label>
+            <input 
+              type="color" 
+              value={patternColor} 
+              onChange={(e) => setPatternColor(e.target.value)} 
+              className="form-control form-control-color border-0 shadow-sm p-1 bg-white bg-opacity-50"
+              style={{ width: '32px', height: '32px', borderRadius: '50%' }}
+            />
+          </div>
+
+          <div className="d-flex align-items-center gap-2">
+            <label className={`form-label small fw-medium mb-0 ${txt}`}>Size</label>
+            <input 
+              type="range" 
+              min="20" 
+              max="400" 
+              value={patternSize} 
+              onChange={(e) => setPatternSize(Number(e.target.value))} 
+              className="form-range"
+              style={{ width: '120px' }}
+            />
+          </div>
+
+          <div className="d-flex align-items-center gap-2">
+            <select 
+              value={selectedPattern} 
+              onChange={handlePatternChange}
+              className={`form-select form-select-sm bg-transparent border-0 shadow-none fw-medium ${txt}`}
+              style={{ cursor: 'pointer' }}
+            >
+              {PATTERNS.map(pattern => (
+                <option key={pattern} value={pattern} className="text-dark">
+                  {pattern.replace('.svg', '').replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                </option>
+              ))}
+            </select>
+          </div>
+
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

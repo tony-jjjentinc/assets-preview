@@ -10,7 +10,7 @@ const baseUrl = 'https://tony-jjjentinc.github.io/assets/images/logo/';
 
 const ImagePreview: React.FC = () => {
   return (
-    <div className="container my-5">
+    <div className="container my-5 p-4 p-md-5">
       <h2 className="mb-4">Logo Gallery</h2>
       <div className="row g-4">
         {logos.map((logo, index) => {

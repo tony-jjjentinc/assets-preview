@@ -2,7 +2,7 @@ import React from 'react';
 
 const TypographyPreview: React.FC = () => {
   return (
-    <div>
+    <div className="p-4 p-md-5">
       <style>
         {`
           @font-face {
