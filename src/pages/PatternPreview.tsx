@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
 const PATTERN_CONFIG: Record<string, number> = {
-  'bubbles.svg': 200,
   'circuit-board.svg': 350,
+  'topography.svg': 670,
+  'bubbles.svg': 200,
   'diagonal-lines.svg': 50,
   'diagonal-stripes.svg': 30,
   'hexagons.svg': 40,
   'texture.svg': 20,
-  'topography.svg': 670,
 };
 const PATTERNS = Object.keys(PATTERN_CONFIG);
 
@@ -25,15 +25,14 @@ const PatternPreview: React.FC = () => {
   const actualPixelSize = (patternScale / 50) * PATTERN_CONFIG[selectedPattern];
 
   return (
-    <div className="position-relative min-vh-100 d-flex flex-column align-items-center justify-content-center overflow-hidden w-100 bg-light" style={{
+    <div className="position-relative min-vh-100 d-flex flex-column align-items-center justify-content-center overflow-hidden w-100 bg-primary-subtle" style={{
       fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
       boxSizing: 'border-box'
     }}>
       <div 
-        className="position-absolute top-0 start-0 w-100 h-100"
+        className="position-absolute top-0 start-0 w-100 h-100 bg-primary"
         style={{
           zIndex: 0,
-          backgroundColor: '#ced4da',
           WebkitMaskImage: `url('${BASE_URL}${selectedPattern}')`,
           maskImage: `url('${BASE_URL}${selectedPattern}')`,
           WebkitMaskSize: `${actualPixelSize}px`,
