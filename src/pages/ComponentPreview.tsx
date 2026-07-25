@@ -4,8 +4,8 @@ const ComponentPreview: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <div className="container-fluid py-5 p-4 p-md-5 bg-primary-subtle">
-      <h1 className="mb-5 fw-bold text-center">Component Preview</h1>
+    <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
+      <h1 className="mb-4 fw-bold text-center">Component Preview</h1>
 
       <section className="row mb-5">
         <div className="col-12">
@@ -79,13 +79,8 @@ const ComponentPreview: React.FC = () => {
         </div>
       </section>
 
-
-      <section className="row mb-5">
-        
-      </section>
-
-      <section className="row row-cols-1 row-cols-md-2 mb-5">
-        <div className="col-12">
+      <section className="row row-cols-1 row-cols-md-2">
+        <div className="col-12 mb-5">
           <h2 className="mb-3">Alerts</h2>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <div className="alert alert-primary" role="alert">
@@ -104,7 +99,7 @@ const ComponentPreview: React.FC = () => {
           </div>
         </div>
 
-        <div className="col-12 h-100">
+        <div className="col-12 h-100 mb-5">
           <h2 className="mb-3">List Group</h2>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <ul className="list-group">
@@ -116,7 +111,6 @@ const ComponentPreview: React.FC = () => {
             </ul>
           </div>
         </div>
-
       </section>
 
       <section className="row mb-5">

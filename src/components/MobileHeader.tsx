@@ -8,9 +8,9 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSidebar }) => {
   return (
     <div className="d-flex d-md-none justify-content-between align-items-center p-3 bg-white shadow-sm border-bottom">
       <img 
-        src="https://tony-jjjentinc.github.io/assets/images/logo/marymart_horizontal.svg" 
+        src="https://tony-jjjentinc.github.io/assets/images/logo/marymart_compact.svg" 
         alt="Marymart Logo" 
-        style={{ height: '30px', objectFit: 'contain' }} 
+        style={{ height: '50px', objectFit: 'contain' }} 
       />
       <button className="btn" onClick={toggleSidebar}>
         <i className="bi bi-list fs-3"></i>

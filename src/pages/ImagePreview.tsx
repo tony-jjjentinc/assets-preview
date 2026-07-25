@@ -10,17 +10,38 @@ const baseUrl = 'https://tony-jjjentinc.github.io/assets/images/logo/';
 
 const ImagePreview: React.FC = () => {
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
   };
 
+  const filteredLogos = logos.filter(logo => logo.toLowerCase().includes(searchQuery.toLowerCase()));
+
   return (
     <>
-      <div className="container my-5 p-4 p-md-5">
-        <h2 className="mb-4">Logo Gallery</h2>
-        <div className="row g-4">
-          {logos.map((logo, index) => {
+      <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
+        <h1 className="mb-4 fw-bold text-center">Image Assets</h1>
+        
+        <div className="d-flex justify-content-center mb-4">
+          <div className="input-group shadow-sm" style={{ maxWidth: '400px' }}>
+            <span className="input-group-text bg-white border-end-0 text-muted">
+              <i className="bi bi-search"></i>
+            </span>
+            <input 
+              type="text" 
+              className="form-control border-start-0 ps-0 shadow-none" 
+              placeholder="Search assets..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
+
+        <div className="bg-white p-4 border rounded-4 shadow-sm">
+          {filteredLogos.length > 0 ? (
+            <div className="row g-4">
+            {filteredLogos.map((logo, index) => {
             const url = `${baseUrl}${logo}`;
             const embedSnippet = `<img src="${url}" alt="${logo}" />`;
             return (
@@ -73,6 +94,13 @@ const ImagePreview: React.FC = () => {
               </div>
             );
           })}
+          </div>
+          ) : (
+            <div className="text-center py-5 text-muted">
+              <i className="bi bi-search fs-1 mb-3 d-block opacity-50"></i>
+              <p className="mb-0">No assets found matching "{searchQuery}"</p>
+            </div>
+          )}
         </div>
       </div>
 

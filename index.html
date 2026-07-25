@@ -5,6 +5,12 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>assets-preview</title>
+    <script>
+      (function() {
+        var group = localStorage.getItem('themeGroup') || 'admin';
+        document.write('<link rel="stylesheet" id="dynamic-theme" href="https://tony-jjjentinc.github.io/assets/colors/' + group + '.css?v=' + Date.now() + '">');
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

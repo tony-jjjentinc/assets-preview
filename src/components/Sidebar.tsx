@@ -39,6 +39,15 @@ interface SidebarProps {
 }
 
 const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
+  const handleNavClick = () => {
+    if (isMobileOpen && onClose) {
+      onClose();
+    }
+  };
+
+  const navLinkClass = ({ isActive }: { isActive: boolean }) => 
+    `nav-link custom-nav-link d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start ${isActive ? 'active bg-primary-subtle shadow-sm text-body-emphasis' : 'link-dark'}`;
+
   return (
     <>
       <style>{sidebarStyles}</style>
@@ -50,37 +59,37 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
         ></div>
       )}
       <div className={`d-flex flex-column flex-shrink-0 p-3 bg-white shadow-sm border-end sidebar-container ${isMobileOpen ? 'open' : ''}`} style={{ width: '280px', height: '100vh' }}>
-        <div className="d-flex align-items-center justify-content-center mb-4">
+        <div className="d-flex align-items-center justify-content-between justify-content-md-center mb-4 w-100 px-2">
           <a href="/" className="text-decoration-none">
-            <img src="https://tony-jjjentinc.github.io/assets/images/logo/marymart_compact.svg" alt="Marymart Logo" className="d-block d-md-none d-lg-block" style={{ height: '128px', maxWidth: '100%', objectFit: 'contain' }} />
+            <img src="https://tony-jjjentinc.github.io/assets/images/logo/marymart_compact.svg" alt="Marymart Logo" className="d-block d-md-none d-lg-block" style={{ height: '64px', maxWidth: '100%', objectFit: 'contain' }} />
             <img src="https://tony-jjjentinc.github.io/assets/images/logo/logo.svg" alt="Marymart Logo Compact" className="d-none d-md-block d-lg-none" style={{ height: '40px', maxWidth: '100%', objectFit: 'contain' }} />
           </a>
-          <button onClick={onClose} className="btn-close d-md-none"></button>
+          <button onClick={onClose} className="btn-close d-md-none mt-2" aria-label="Close"></button>
         </div>
         <hr className="mb-4 mt-0 opacity-10" />
         <ul className="nav nav-pills flex-column mb-auto gap-2">
           <li className="nav-item">
-            <NavLink to="/" className={({ isActive }) => `nav-link custom-nav-link d-flex align-items-center justify-content-center justify-content-lg-start ${isActive ? 'active bg-primary-subtle shadow-sm text-body-emphasis' : 'link-dark'}`} end>
-              <i className="bi bi-ui-checks me-lg-3 fs-5"></i>
-              <span className="d-none d-lg-inline">Components</span>
+            <NavLink to="/" onClick={handleNavClick} className={navLinkClass} end>
+              <i className="bi bi-ui-checks me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Components</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/images" className={({ isActive }) => `nav-link custom-nav-link d-flex align-items-center justify-content-center justify-content-lg-start ${isActive ? 'active bg-primary-subtle shadow-sm text-body-emphasis' : 'link-dark'}`}>
-              <i className="bi bi-images me-lg-3 fs-5"></i>
-              <span className="d-none d-lg-inline">Images</span>
+            <NavLink to="/images" onClick={handleNavClick} className={navLinkClass}>
+              <i className="bi bi-images me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Images</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/typography" className={({ isActive }) => `nav-link custom-nav-link d-flex align-items-center justify-content-center justify-content-lg-start ${isActive ? 'active bg-primary-subtle shadow-sm text-body-emphasis' : 'link-dark'}`}>
-              <i className="bi bi-type me-lg-3 fs-5"></i>
-              <span className="d-none d-lg-inline">Typography</span>
+            <NavLink to="/typography" onClick={handleNavClick} className={navLinkClass}>
+              <i className="bi bi-type me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Typography</span>
             </NavLink>
           </li>
           <li>
-            <NavLink to="/patterns" className={({ isActive }) => `nav-link custom-nav-link d-flex align-items-center justify-content-center justify-content-lg-start ${isActive ? 'active bg-primary-subtle shadow-sm text-body-emphasis' : 'link-dark'}`}>
-              <i className="bi bi-grid-3x3 me-lg-3 fs-5"></i>
-              <span className="d-none d-lg-inline">Patterns</span>
+            <NavLink to="/patterns" onClick={handleNavClick} className={navLinkClass}>
+              <i className="bi bi-grid-3x3 me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Patterns</span>
             </NavLink>
           </li>
         </ul>
