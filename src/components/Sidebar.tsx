@@ -60,7 +60,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
       )}
       <div className={`d-flex flex-column flex-shrink-0 p-3 bg-white shadow-sm border-end sidebar-container ${isMobileOpen ? 'open' : ''}`} style={{ width: '280px', height: '100vh' }}>
         <div className="d-flex align-items-center justify-content-between justify-content-md-center mb-4 w-100 px-2">
-          <a href="/" className="text-decoration-none">
+          <a href="/assets-preview/" className="text-decoration-none">
             <img src="https://tony-jjjentinc.github.io/assets/images/logo/marymart_compact.svg" alt="Marymart Logo" className="d-block d-md-none d-lg-block" style={{ height: '64px', maxWidth: '100%', objectFit: 'contain' }} />
             <img src="https://tony-jjjentinc.github.io/assets/images/logo/logo.svg" alt="Marymart Logo Compact" className="d-none d-md-block d-lg-none" style={{ height: '40px', maxWidth: '100%', objectFit: 'contain' }} />
           </a>
