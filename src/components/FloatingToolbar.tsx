@@ -2,10 +2,21 @@
 import { useDynamicCss } from '../hooks/useDynamicCss';
 
 const GROUPS = [
+  'gmo',
   'admin',
+  'admin_2',
+  'admin_3',
+  'admin_4',
+  'admin_5',
+  'admin_6',
   'controller',
   'facilities',
-  'gmo',
+  'facilities_2',
+  'facilities_3',
+  'facilities_4',
+  'facilities_5',
+  'facilities_6',
+  'facilities_7',
   'hr',
   'leasing',
   'procurement',
@@ -13,7 +24,7 @@ const GROUPS = [
 ];
 
 export const FloatingToolbar: React.FC = () => {
-  const [group, setGroup] = useDynamicCss('admin');
+  const [group, setGroup] = useDynamicCss('gmo');
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setGroup(e.target.value);

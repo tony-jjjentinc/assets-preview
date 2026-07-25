@@ -8,6 +8,7 @@ const PATTERN_CONFIG: Record<string, number> = {
   'diagonal-stripes.svg': 30,
   'hexagons.svg': 40,
   'texture.svg': 20,
+  'texture2.svg': 35,
 };
 const PATTERNS = Object.keys(PATTERN_CONFIG);
 
