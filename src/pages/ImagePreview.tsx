@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 const logos = [
+  'base.svg',
   'logo.svg',
   'marymart_compact.svg',
   'marymart_horizontal.svg'
