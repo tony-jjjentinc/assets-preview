@@ -3,7 +3,7 @@ import { useDynamicCss } from '../hooks/useDynamicCss';
 import { formatName } from '../utils/formatName';
 
 export const FloatingToolbar: React.FC = () => {
-  const [group, setGroup] = useDynamicCss('admin');
+  const [group, setGroup] = useDynamicCss('gmo');
   const [availableGroups, setAvailableGroups] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 

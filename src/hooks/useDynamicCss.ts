@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useDynamicCss = (defaultGroup: string = 'admin') => {
+export const useDynamicCss = (defaultGroup: string = 'gmo') => {
   const [group, setGroup] = useState<string>(() => {
     return localStorage.getItem('themeGroup') || defaultGroup;
   });
