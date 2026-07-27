@@ -46,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
   };
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) => 
-    `nav-link custom-nav-link d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start ${isActive ? 'active bg-primary-subtle shadow-sm text-body-emphasis' : 'link-dark'}`;
+    `nav-link custom-nav-link d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start ${isActive ? 'active bg-brand-primary shadow-sm text-light' : 'link-dark'}`;
 
   return (
     <>
@@ -58,7 +58,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
           onClick={onClose}
         ></div>
       )}
-      <div className={`d-flex flex-column flex-shrink-0 p-3 bg-white shadow-sm sidebar-container ${isMobileOpen ? 'open' : ''}`} style={{ width: '280px', height: '100vh' }}>
+      <div className={`d-flex flex-column flex-shrink-0 p-3 shadow-sm sidebar-container ${isMobileOpen ? 'open' : ''}`} style={{ width: '280px', height: '100vh' }}>
         <div className="d-flex align-items-center justify-content-between justify-content-md-center w-100 px-2 mb-3">
           <a href="/assets-preview/" className="text-decoration-none">
             <img src="https://tony-jjjentinc.github.io/assets/images/logo/jjjei_stacked.svg" alt="Marymart Logo" className="d-block d-md-none d-lg-block" style={{ height: '64px', maxWidth: '100%', objectFit: 'contain' }} />
