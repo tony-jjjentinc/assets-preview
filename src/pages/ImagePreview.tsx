@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 
 const logos = [
   'base.svg',
+  'base-light.svg',
+  'base-dark.svg',
   'logo.svg',
   'marymart_compact.svg',
-  'marymart_horizontal.svg'
+  'marymart_horizontal.svg',
+  'jjjei_stacked.svg',
+  'jjjei_horizontal.svg',
 ];
 
 const baseUrl = 'https://tony-jjjentinc.github.io/assets/images/logo/';

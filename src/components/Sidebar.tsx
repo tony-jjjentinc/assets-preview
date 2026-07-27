@@ -58,15 +58,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
           onClick={onClose}
         ></div>
       )}
-      <div className={`d-flex flex-column flex-shrink-0 p-3 bg-white shadow-sm border-end sidebar-container ${isMobileOpen ? 'open' : ''}`} style={{ width: '280px', height: '100vh' }}>
-        <div className="d-flex align-items-center justify-content-between justify-content-md-center mb-4 w-100 px-2">
+      <div className={`d-flex flex-column flex-shrink-0 p-3 bg-white shadow-sm sidebar-container ${isMobileOpen ? 'open' : ''}`} style={{ width: '280px', height: '100vh' }}>
+        <div className="d-flex align-items-center justify-content-between justify-content-md-center w-100 px-2 mb-3">
           <a href="/assets-preview/" className="text-decoration-none">
-            <img src="https://tony-jjjentinc.github.io/assets/images/logo/marymart_compact.svg" alt="Marymart Logo" className="d-block d-md-none d-lg-block" style={{ height: '64px', maxWidth: '100%', objectFit: 'contain' }} />
+            <img src="https://tony-jjjentinc.github.io/assets/images/logo/jjjei_stacked.svg" alt="Marymart Logo" className="d-block d-md-none d-lg-block" style={{ height: '64px', maxWidth: '100%', objectFit: 'contain' }} />
             <img src="https://tony-jjjentinc.github.io/assets/images/logo/logo.svg" alt="Marymart Logo Compact" className="d-none d-md-block d-lg-none" style={{ height: '40px', maxWidth: '100%', objectFit: 'contain' }} />
           </a>
           <button onClick={onClose} className="btn-close d-md-none mt-2" aria-label="Close"></button>
         </div>
-        <hr className="mb-4 mt-0 opacity-10" />
         <ul className="nav nav-pills flex-column mb-auto gap-2">
           <li className="nav-item">
             <NavLink to="/" onClick={handleNavClick} className={navLinkClass} end>

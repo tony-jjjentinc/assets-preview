@@ -32,7 +32,8 @@ const ColorPreview: React.FC = () => {
         // Group colors by base name (e.g., 'gmo', 'admin')
         const grouped: Record<string, Record<string, string>> = {};
         Object.entries(gData).forEach(([key, hex]) => {
-          const baseName = key.split('_')[0];
+          // Under the new format, the separator between base group and variant is a colon
+          const baseName = key.split(':')[0];
           if (!grouped[baseName]) {
             grouped[baseName] = {};
           }
