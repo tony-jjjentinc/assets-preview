@@ -65,30 +65,31 @@ const ColorPreview: React.FC = () => {
     const isCopied = copiedHex === hex;
     
     return (
-      <div 
-        key={name} 
-        className="d-flex flex-column align-items-center"
-        style={{ cursor: 'pointer', transition: 'transform 0.2s ease', width: '100px' }}
-        onClick={() => handleCopy(hex)}
-        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-        title="Click to copy hex value"
-      >
+      <div key={name} className="col">
         <div 
-          style={{ width: '90px', height: '90px', backgroundColor: hex, borderRadius: '16px', boxShadow: '0 8px 16px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.05)' }}
-          className="mb-3"
-        ></div>
-        <span className="fw-bold text-center text-truncate w-100" style={{ fontSize: '0.9rem' }}>{formatName(name)}</span>
-        <span 
-          className={`small ${isCopied ? 'text-success fw-bold' : 'text-muted'}`} 
-          style={{ fontSize: '0.8rem', fontFamily: 'monospace', transition: 'color 0.2s ease' }}
+          className="d-flex flex-column align-items-center h-100"
+          style={{ cursor: 'pointer', transition: 'transform 0.2s ease' }}
+          onClick={() => handleCopy(hex)}
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+          title="Click to copy hex value"
         >
-          {isCopied ? (
-            <><i className="bi bi-check2 me-1"></i>Copied!</>
-          ) : (
-            hex
-          )}
-        </span>
+          <div 
+            style={{ width: '100%', height: '90px', backgroundColor: hex, borderRadius: '16px', boxShadow: '0 8px 16px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.05)' }}
+            className="mb-3"
+          ></div>
+          <span className="fw-bold text-center w-100" style={{ fontSize: '0.9rem' }}>{formatName(name)}</span>
+          <span 
+            className={`small ${isCopied ? 'text-success fw-bold' : 'text-muted'}`} 
+            style={{ fontSize: '0.8rem', fontFamily: 'monospace', transition: 'color 0.2s ease' }}
+          >
+            {isCopied ? (
+              <><i className="bi bi-check2 me-1"></i>Copied!</>
+            ) : (
+              hex
+            )}
+          </span>
+        </div>
       </div>
     );
   };
@@ -100,7 +101,7 @@ const ColorPreview: React.FC = () => {
       <section className="row mb-5">
         <div className="col-12">
           <h2 className="mb-4">System Utility Colors</h2>
-          <div className="bg-white p-4 border rounded-4 shadow-sm d-flex flex-wrap gap-4">
+          <div className="bg-white p-4 border rounded-4 shadow-sm row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4 m-0">
             {Object.entries(systemColors).map(([name, hex]) => renderSwatch(name, hex))}
           </div>
         </div>
@@ -110,7 +111,7 @@ const ColorPreview: React.FC = () => {
         <section key={baseName} className="row mb-5">
           <div className="col-12">
             <h2 className="mb-4">{formatName(baseName)} Group Colors</h2>
-            <div className="bg-white p-4 border rounded-4 shadow-sm d-flex flex-wrap gap-4">
+            <div className="bg-white p-4 border rounded-4 shadow-sm row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4 m-0">
               {Object.entries(colors).map(([name, hex]) => renderSwatch(name, hex))}
             </div>
           </div>
