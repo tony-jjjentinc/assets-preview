@@ -75,6 +75,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/colors" onClick={handleNavClick} className={navLinkClass}>
+              <i className="bi bi-palette me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Colors</span>
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/images" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-images me-3 me-md-0 me-lg-3 fs-5"></i>
               <span className="d-inline d-md-none d-lg-inline">Images</span>

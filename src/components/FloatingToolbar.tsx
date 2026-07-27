@@ -1,30 +1,30 @@
-
+import React, { useState, useEffect } from 'react';
 import { useDynamicCss } from '../hooks/useDynamicCss';
-
-const GROUPS = [
-  'gmo',
-  'admin',
-  'admin_2',
-  'admin_3',
-  'admin_4',
-  'admin_5',
-  'admin_6',
-  'controller',
-  'facilities',
-  'facilities_2',
-  'facilities_3',
-  'facilities_4',
-  'facilities_5',
-  'facilities_6',
-  'facilities_7',
-  'hr',
-  'leasing',
-  'procurement',
-  'treasury'
-];
+import { formatName } from '../utils/formatName';
 
 export const FloatingToolbar: React.FC = () => {
-  const [group, setGroup] = useDynamicCss('gmo');
+  const [group, setGroup] = useDynamicCss('admin');
+  const [availableGroups, setAvailableGroups] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchGroups = async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetch('https://tony-jjjentinc.github.io/assets/config/groupColors.json');
+        const data = await res.json();
+        
+        // Use all available group variants as selectable themes
+        setAvailableGroups(Object.keys(data));
+      } catch (err) {
+        console.error('Failed to fetch available groups:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchGroups();
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setGroup(e.target.value);
@@ -57,12 +57,17 @@ export const FloatingToolbar: React.FC = () => {
         value={group} 
         onChange={handleChange}
         aria-label="Select theme group"
+        disabled={isLoading || availableGroups.length === 0}
       >
-        {GROUPS.map((g) => (
-          <option key={g} value={g}>
-            {g.toUpperCase()}
-          </option>
-        ))}
+        {isLoading ? (
+          <option value={group}>Loading themes...</option>
+        ) : (
+          availableGroups.map((g) => (
+            <option key={g} value={g}>
+              {formatName(g)}
+            </option>
+          ))
+        )}
       </select>
     </div>
   );
