@@ -5,7 +5,7 @@ const logos = [
   'base-light.svg',
   'base-dark.svg',
   'logo.svg',
-  'marymart_compact.svg',
+  'marymart_stacked.svg',
   'marymart_horizontal.svg',
   'jjjei_stacked.svg',
   'jjjei_horizontal.svg',
