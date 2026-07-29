@@ -97,6 +97,18 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
               <span className="d-inline d-md-none d-lg-inline">Patterns</span>
             </NavLink>
           </li>
+          <li>
+            <NavLink to="/setup" onClick={handleNavClick} className={navLinkClass}>
+              <i className="bi bi-gear me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Setup Instructions</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/templates" onClick={handleNavClick} className={navLinkClass}>
+              <i className="bi bi-layout-text-window-reverse me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Templates</span>
+            </NavLink>
+          </li>
         </ul>
       </div>
     </>
