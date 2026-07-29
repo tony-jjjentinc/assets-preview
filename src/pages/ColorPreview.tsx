@@ -1,13 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { formatName, formatSystemStatusName } from '../utils/formatName';
+import { formatName, formatSystemStatusName, formatVariantName } from '../utils/formatName';
 
 const ColorPreview: React.FC = () => {
   const [groupedColors, setGroupedColors] = useState<Record<string, Record<string, string>>>({});
   const [systemColors, setSystemColors] = useState<Record<string, string>>({});
   const [statusColors, setStatusColors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [subtleGroups, setSubtleGroups] = useState<Record<string, boolean>>({});
 
   const [copiedHex, setCopiedHex] = useState<string | null>(null);
+
+  const getSubtleHex = (hex: string): string => {
+    let cleanHex = hex.replace('#', '');
+    if (cleanHex.length === 3) {
+      cleanHex = cleanHex.split('').map(c => c + c).join('');
+    }
+    const r = parseInt(cleanHex.substring(0, 2), 16);
+    const g = parseInt(cleanHex.substring(2, 4), 16);
+    const b = parseInt(cleanHex.substring(4, 6), 16);
+    const mix = (c: number) => Math.round(c * 0.2 + 255 * 0.8);
+    const sr = mix(r).toString(16).padStart(2, '0');
+    const sg = mix(g).toString(16).padStart(2, '0');
+    const sb = mix(b).toString(16).padStart(2, '0');
+    return `#${sr}${sg}${sb}`.toUpperCase();
+  };
+
+  const toggleSubtle = (baseName: string) => {
+    setSubtleGroups(prev => ({ ...prev, [baseName]: !prev[baseName] }));
+  };
 
   const handleCopy = async (hex: string) => {
     try {
@@ -65,21 +85,22 @@ const ColorPreview: React.FC = () => {
     );
   }
 
-  const renderSwatch = (name: string, hex: string, formatter: (n: string) => string = formatName) => {
-    const isCopied = copiedHex === hex;
+  const renderSwatch = (name: string, hex: string, formatter: (n: string) => string = formatName, isSubtle = false) => {
+    const displayHex = isSubtle ? getSubtleHex(hex) : hex;
+    const isCopied = copiedHex === displayHex;
     
     return (
       <div key={name} className="col">
         <div 
           className="d-flex flex-column align-items-center h-100"
           style={{ cursor: 'pointer', transition: 'transform 0.2s ease' }}
-          onClick={() => handleCopy(hex)}
+          onClick={() => handleCopy(displayHex)}
           onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
           onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
           title="Click to copy hex value"
         >
           <div 
-            style={{ width: '100%', height: '67px', backgroundColor: hex, borderRadius: '4px', boxShadow: '0 8px 16px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.05)' }}
+            style={{ width: '100%', height: '67px', backgroundColor: displayHex, borderRadius: '4px', boxShadow: '0 8px 16px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.05)' }}
             className="mb-3"
           ></div>
           <span className="fw-bold text-center w-100 text-capitalize" style={{ fontSize: '0.9rem' }}>{formatter(name)}</span>
@@ -90,7 +111,7 @@ const ColorPreview: React.FC = () => {
             {isCopied ? (
               <><i className="bi bi-check2 me-1"></i>Copied!</>
             ) : (
-              hex
+              displayHex
             )}
           </span>
         </div>
@@ -123,9 +144,25 @@ const ColorPreview: React.FC = () => {
       {Object.entries(groupedColors).map(([baseName, colors]) => (
         <section key={baseName} className="row mb-5">
           <div className="col-12">
-            <h2 className="mb-4">{formatName(baseName)} Group Colors</h2>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+              <h2 className="mb-0">{formatName(baseName)} Group Colors</h2>
+              <div className="form-check form-switch fs-5">
+                <label className="form-check-label fs-6 text-muted ms-2" htmlFor={`switch-${baseName}`} style={{ cursor: 'pointer' }}>
+                  Background
+                </label>
+                <input 
+                  className="form-check-input" 
+                  type="checkbox"
+                  role="switch" 
+                  id={`switch-${baseName}`}
+                  checked={!!subtleGroups[baseName]}
+                  onChange={() => toggleSubtle(baseName)}
+                  style={{ cursor: 'pointer' }}
+                />
+              </div>
+            </div>
             <div className="bg-white p-4 border rounded-4 shadow-sm row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4 m-0">
-              {Object.entries(colors).map(([name, hex]) => renderSwatch(name, hex))}
+              {Object.entries(colors).map(([name, hex]) => renderSwatch(name, hex, formatVariantName, !!subtleGroups[baseName]))}
             </div>
           </div>
         </section>
