@@ -18,6 +18,8 @@ const ColorPreview: React.FC = () => {
     const r = parseInt(cleanHex.substring(0, 2), 16);
     const g = parseInt(cleanHex.substring(2, 4), 16);
     const b = parseInt(cleanHex.substring(4, 6), 16);
+    // Bootstrap 5 default subtle background tint weight is 80%
+    // This implies 80% white and 20% base color.
     const mix = (c: number) => Math.round(c * 0.2 + 255 * 0.8);
     const sr = mix(r).toString(16).padStart(2, '0');
     const sg = mix(g).toString(16).padStart(2, '0');
