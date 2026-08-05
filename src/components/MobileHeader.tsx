@@ -8,7 +8,7 @@ const MobileHeader: React.FC<MobileHeaderProps> = ({ toggleSidebar }) => {
   return (
     <div className="d-flex d-md-none justify-content-between align-items-center p-3 bg-white shadow-sm border-bottom">
       <img 
-        src="https://tony-jjjentinc.github.io/assets/images/logo/jjjei_stacked.svg" 
+        src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/jjjei_stacked.svg" 
         alt="Marymart Logo" 
         style={{ height: '50px', objectFit: 'contain' }} 
       />

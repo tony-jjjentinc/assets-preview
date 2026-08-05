@@ -7,11 +7,11 @@ const TypographyPreview: React.FC = () => {
         {`
           @font-face {
             font-family: 'Inter';
-            src: url('https://tony-jjjentinc.github.io/assets/fonts/Inter.woff2') format('woff2');
+            src: url('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/fonts/Inter.woff2') format('woff2');
           }
           @font-face {
             font-family: 'Gill Sans Nova';
-            src: url('https://tony-jjjentinc.github.io/assets/fonts/GillSansNova-Bold.woff2') format('woff2');
+            src: url('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/fonts/GillSansNova-Bold.woff2') format('woff2');
             font-weight: bold;
           }
         `}

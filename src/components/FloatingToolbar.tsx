@@ -11,7 +11,7 @@ export const FloatingToolbar: React.FC = () => {
     const fetchGroups = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch('https://tony-jjjentinc.github.io/assets/config/groupColors.json');
+        const res = await fetch('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/config/groupColors.json');
         const data = await res.json();
         
         // Use all available group variants as selectable themes

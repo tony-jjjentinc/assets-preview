@@ -12,7 +12,7 @@ const PATTERN_CONFIG: Record<string, number> = {
 };
 const PATTERNS = Object.keys(PATTERN_CONFIG);
 
-const BASE_URL = 'https://tony-jjjentinc.github.io/assets/images/misc/background-pattern/';
+const BASE_URL = 'https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/misc/background-pattern/';
 
 const PatternPreview: React.FC = () => {
   const [patternScale, setPatternScale] = useState(50);

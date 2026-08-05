@@ -6,7 +6,7 @@ The assets directory are served via Github Pages
 
 To use these assets in your projects, you must construct the base URL for the GitHub Pages deployment. 
 Based on this repository, the base URL is:
-`https://tony-jjjentinc.github.io/assets/`
+`https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/`
 
 You can define this base URL dynamically in web projects (e.g., passing it to the HTML template) or hardcode it in the frontend code.
 
@@ -18,7 +18,7 @@ You can define this base URL dynamically in web projects (e.g., passing it to th
 Replace the default Bootstrap 5 CSS CDN link in your web projects with the GitHub Pages URL pointing to the pre-compiled group CSS. These files bundle both the Bootstrap 5 core and the custom theme.
 
 ```html
-<link rel="stylesheet" href="https://tony-jjjentinc.github.io/assets/colors/admin.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/admin.css">
 ```
 
 ### Dynamic Implementation (Code.gs)
@@ -29,7 +29,7 @@ You can dynamically pass the appropriate group CSS URL to the frontend template,
 function doGet(e) {
   var group = e.parameter.group || 'admin';
   var template = HtmlService.createTemplateFromFile('Index');
-  template.cssUrl = 'https://tony-jjjentinc.github.io/assets/colors/' + group + '.css';
+  template.cssUrl = 'https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/' + group + '.css';
   return template.evaluate();
 }
 ```
@@ -57,7 +57,7 @@ Provide explicit `@font-face` CSS declarations inside a `<style>` tag within the
 /* Inter Font */
 @font-face {
     font-family: 'Inter';
-    src: url('https://tony-jjjentinc.github.io/assets/fonts/Inter.woff2') format('woff2');
+    src: url('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/fonts/Inter.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
@@ -65,7 +65,7 @@ Provide explicit `@font-face` CSS declarations inside a `<style>` tag within the
 /* Gill Sans Nova Bold */
 @font-face {
     font-family: 'Gill Sans Nova';
-    src: url('https://tony-jjjentinc.github.io/assets/fonts/GillSansNova-Bold.woff2') format('woff2');
+    src: url('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/fonts/GillSansNova-Bold.woff2') format('woff2');
     font-weight: bold;
     font-style: normal;
 }
@@ -83,7 +83,7 @@ Since web projects serves the UI in a sandboxed iframe (`IFRAME` mode), referenc
 Use `<img>` tags for logos in the application header or footer.
 
 ```html
-<img src="https://tony-jjjentinc.github.io/assets/images/logo/marymart_horizontal.svg" alt="Marymart Logo" width="200" />
+<img src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/marymart_horizontal.svg" alt="Marymart Logo" width="200" />
 ```
 
 ### Background Patterns (CSS Backgrounds)
@@ -93,7 +93,7 @@ Apply the provided SVGs as background textures to containers using CSS.
 <style>
 .hero-section {
     background-color: #f0f0f0; /* Fallback/base color */
-    background-image: url('https://tony-jjjentinc.github.io/assets/images/misc/background-pattern/topography.svg');
+    background-image: url('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/misc/background-pattern/topography.svg');
     background-repeat: repeat;
 }
 </style>

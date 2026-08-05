@@ -11,7 +11,7 @@ const logos = [
   'jjjei_horizontal.svg',
 ];
 
-const baseUrl = 'https://tony-jjjentinc.github.io/assets/images/logo/';
+const baseUrl = 'https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/';
 
 const ImagePreview: React.FC = () => {
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);

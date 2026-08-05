@@ -11,12 +11,12 @@ export const useDynamicCss = (defaultGroup: string = 'gmo') => {
     let linkElement = document.getElementById(linkId) as HTMLLinkElement | null;
     
     if (linkElement) {
-      linkElement.href = `https://tony-jjjentinc.github.io/assets/colors/${group}.css`;
+      linkElement.href = `https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/${group}.css`;
     } else {
       linkElement = document.createElement('link');
       linkElement.id = linkId;
       linkElement.rel = 'stylesheet';
-      linkElement.href = `https://tony-jjjentinc.github.io/assets/colors/${group}.css`;
+      linkElement.href = `https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/${group}.css`;
       document.head.appendChild(linkElement);
     }
   }, [group]);

@@ -46,9 +46,9 @@ const ColorPreview: React.FC = () => {
       setIsLoading(true);
       try {
         const [gRes, sRes, stRes] = await Promise.all([
-          fetch('https://tony-jjjentinc.github.io/assets/config/groupColors.json'),
-          fetch('https://tony-jjjentinc.github.io/assets/config/systemColors.json'),
-          fetch('https://tony-jjjentinc.github.io/assets/config/statusColors.json')
+          fetch('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/config/groupColors.json'),
+          fetch('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/config/systemColors.json'),
+          fetch('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/config/statusColors.json')
         ]);
         const gData = await gRes.json();
         const sData = await sRes.json();
