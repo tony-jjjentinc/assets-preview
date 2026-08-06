@@ -17,11 +17,11 @@ const TypographyPreview: React.FC = () => {
         `}
       </style>
 
-      <h1 className="mb-4 fw-bold text-center">Typography Preview</h1>
+      <h1 className="mb-5 fw-bold text-center">Typography Preview</h1>
 
-      <section className="row mb-5 row-cols-1 row-cols-xl-2 text-center">
+      <section className="row mb-5 row-cols-1 row-cols-xl-2 text-start">
         <div className="col">
-          <h2 className="mb-3">Inter</h2>
+          <h2 className="h4 mb-3">Inter</h2>
           <div className="bg-white p-4 p-md-5 border rounded-4 shadow-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
             <h1 className="mb-3">Heading 1 (H1)</h1>
             <h2 className="mb-3">Heading 2 (H2)</h2>
@@ -36,7 +36,7 @@ const TypographyPreview: React.FC = () => {
           </div>
         </div>
         <div className="col">
-          <h2 className="mb-3">Gill Sans Nova (Bold)</h2>
+          <h2 className="h4 mb-3">Gill Sans Nova (Bold)</h2>
           <div className="bg-white p-4 p-md-5 border rounded-4 shadow-sm" style={{ fontFamily: '"Gill Sans Nova", sans-serif', fontWeight: 'bold' }}>
             <h1 className="mb-3 fw-bold">Heading 1 (H1)</h1>
             <h2 className="mb-3 fw-bold">Heading 2 (H2)</h2>

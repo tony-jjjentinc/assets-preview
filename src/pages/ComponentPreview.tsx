@@ -84,17 +84,13 @@ const ComponentPreview: React.FC = () => {
           <h2 className="mb-3">Alerts</h2>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <div className="alert alert-primary" role="alert">
-              A simple primary alert—check it out!
+              A simple primary alert, check it out!
             </div>
             <div className="alert alert-success" role="alert">
-              A simple success alert—check it out!
+              A simple success alert, check it out!
             </div>
             <div className="alert alert-danger" role="alert">
-              A simple danger alert—check it out!
-            </div>
-            <div className="alert alert-warning alert-dismissible fade show mb-0" role="alert">
-              <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-              <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              A simple danger alert, check it out!
             </div>
           </div>
         </div>

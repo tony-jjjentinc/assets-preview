@@ -46,15 +46,34 @@ const ColorRow = ({ title, desc, classes }: { title: string, desc: React.ReactNo
 );
 
 const SetupInstructions: React.FC = () => {
-  const htmlSnippet = `<!-- 1. Bootstrap 5 Core CSS -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  const [activeTab, setActiveTab] = useState<'existing' | 'new'>('existing');
 
-<!-- 2. Bootstrap 5 JS Bundle (Optional but recommended) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmxc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
-<!-- 3. JJJEI Assets Design System (MUST be after Bootstrap) -->
+  const existingOverrideOnly = `<!-- JJJEI Assets Design System -->
 <!-- Example: loading the GMO theme base -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v1/jjjei_gmo:0.css">
+`;
+
+  const newProjectSnippet = `<!-- 1. Create a new index.html file -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Project</title>
+
+  <!-- 2. Bootstrap 5 Core CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+
+  <!-- 3. Assets Design System (MUST be after Bootstrap) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v1/jjjei_gmo:0.css">
+</head>
+<body>
+  <h1>Hello, World!</h1>
+
+  <!-- 4. Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>
 `;
 
   return (
@@ -62,95 +81,159 @@ const SetupInstructions: React.FC = () => {
       <div className="row justify-content-center">
         <div className="col-12 col-xl-10">
           
-          <div className="mb-4 text-center text-md-start">
-            <h1 className="mb-3 fw-bold text-center">Setup and Instructions</h1>
-            <p className="text-muted text-center fs-5">Everything you need to integrate the JJJEI design system into your project.</p>
-          </div>
+          <div className="mb-4 text-center">
+            <h1 className="mb-3 fw-bold text-center">Setup and Usage</h1>
+            
+            <div className='d-flex flex-column align-items-start justify-content-center mt-5'>
+              <h5 className="p text-muted mb-2">Setup instructions for:</h5>
+              <div className="btn-group shadow-sm" role="group" aria-label="Setup variants">
+                <input type="radio" className="btn-check" name="setupVariant" id="existingProj" autoComplete="off" checked={activeTab === 'existing'} onChange={() => setActiveTab('existing')} />
+                <label className="btn btn-outline-primary px-4 py-2 fw-bold" htmlFor="existingProj">Existing Projects</label>
 
-          {/* Section 1: Bootstrap */}
-          <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
-            <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
-              <h3 className="fw-bold text-primary mb-0"><i className="bi bi-1-circle me-2"></i>Bootstrap 5 Foundation</h3>
-            </div>
-            <div className="card-body p-4">
-              <p>
-                The foundation of the JJJEI design system is built entirely on top of <strong>Bootstrap 5</strong>. This means that out of the box, you have access to the entire suite of standard Bootstrap utility classes for layout, spacing, typography, and flexbox.
-              </p>
-              <a href="https://getbootstrap.com/docs/5.3/getting-started/introduction/" target="_blank" rel="noopener noreferrer" className="btn btn-outline-primary shadow-sm mt-2">
-                <i className="bi bi-journal-code me-2"></i>Official Bootstrap 5 Documentation
-              </a>
+                <input type="radio" className="btn-check" name="setupVariant" id="newProj" autoComplete="off" checked={activeTab === 'new'} onChange={() => setActiveTab('new')} />
+                <label className="btn btn-outline-primary px-4 py-2 fw-bold" htmlFor="newProj">New Projects</label>
+              </div>
             </div>
           </div>
 
-          {/* Section 2: CDNs */}
-          <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
-            <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
-              <h3 className="fw-bold text-primary mb-0"><i className="bi bi-2-circle me-2"></i>Include the CDNs</h3>
+          {activeTab === 'existing' && (
+            <div className="fade show">
+              <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
+                <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+                  <h3 className="fw-bold text-dark mb-0">Import the Design System</h3>
+                </div>
+                <div className="card-body p-4 pt-2">
+                  <p className="mb-4">
+                    If you just want the colors for your existing project, you can simply import the override CDN into your HTML <code>&lt;head&gt;</code>.
+                  </p>
+                  <CodeSnippet code={existingOverrideOnly} />
+
+                  <div className="alert alert-primary mt-4 mb-0 border-0 shadow-sm">
+                    <i className="bi bi-info-circle-fill me-3"></i>
+                    <strong>Using Bootstrap?</strong> We highly recommend importing the core Bootstrap 5 CDNs (CSS and JS) to leverage the full layout system. Ensure the Assets CDN URL is imported <em>after</em> Bootstrap CSS!
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="card-body p-4">
-              <p className="mb-4">
-                To start using the design system, you must import the necessary CSS and JS files in your HTML <code>&lt;head&gt;</code>. 
-                <br/><strong>Crucial:</strong> The JJJEI Assets CSS file must be imported <em>after</em> the Bootstrap CSS so that it can successfully override the default variables!
-              </p>
-              <CodeSnippet code={htmlSnippet} />
+          )}
+
+          {activeTab === 'new' && (
+            <div className="fade show">
+              <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
+                <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+                  <h3 className="fw-bold text-dark mb-0">Start a New Project</h3>
+                </div>
+                <div className="card-body p-4 pt-2">
+                  <p className="mb-4">
+                    For brand new projects, <strong>we strongly recommend Bootstrap 5</strong> as the foundation of your layout. Create a standard <code>index.html</code> file and paste the following boilerplate. It includes the core Bootstrap CSS/JS alongside the custom JJJEI theme override (loaded in the correct order).
+                  </p>
+                  <CodeSnippet code={newProjectSnippet} />
+                </div>
+              </div>
             </div>
+          )}
+
+          {/* Usage Section */}
+          <div className="mt-5 pt-4 border-top">
+            <h2 className="mb-4 fw-bold text-center">Basic Usage</h2>
+
+            <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
+              <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+                <h3 className="fw-bold text-dark mb-0"><i className="bi bi-palette me-3"></i>Color Classes</h3>
+              </div>
+              <div className="card-body p-4 pt-2">
+                <p className="mb-4">
+                  In addition to standard Bootstrap colors, the Assets repository introduces specific utility classes mapped to the current theme. You can use these exactly like standard Bootstrap color utilities (e.g., <code>bg-*</code>, <code>text-*</code>, <code>border-*</code>).
+                </p>
+                
+                <ColorRow 
+                  title="Page Background" 
+                  desc="The default washed-out background color. It should typically be applied to your <body> or root app container."
+                  classes={[{ className: 'bg-primary-subtle', label: 'Primary Subtle' }]}
+                />
+
+                <ColorRow 
+                  title="Base Primary" 
+                  desc="The solid, flat version of the current theme's primary color. (Note: standard elements use bg-primary-gradient by default, use this when you need a flat alternative)."
+                  classes={[{ className: 'bg-primary-base', label: 'Primary Base' }]}
+                />
+
+                <ColorRow 
+                  title="JJJEI Brand Colors" 
+                  desc="The overarching corporate brand colors for JJJEI, completely independent of the selected sub-theme."
+                  classes={[
+                    { className: 'bg-jjjei-primary', label: 'JJJEI Primary' },
+                    { className: 'bg-jjjei-secondary', label: 'JJJEI Secondary' }
+                  ]}
+                />
+
+                <ColorRow 
+                  title="System Utilities" 
+                  desc="Standard Bootstrap functional colors re-mapped perfectly to the JJJEI palette."
+                  classes={[
+                    { className: 'bg-success', label: 'Success' },
+                    { className: 'bg-danger', label: 'Danger' },
+                    { className: 'bg-warning', label: 'Warning' },
+                    { className: 'bg-info', label: 'Info' }
+                  ]}
+                />
+
+                <ColorRow 
+                  title="Status Colors" 
+                  desc={<>Dynamic semantic status colors (0-9). Use these for badges, indicators, and data visualizations. See the <Link to="/status">Status Colors page</Link> for the full mapping and class names.</>}
+                  classes={[
+                    { className: 'bg-status-0', label: 'Status 0' },
+                    { className: 'bg-status-1', label: 'Status 1' },
+                    { className: 'bg-status-2', label: 'Status 2' }
+                  ]}
+                />
+              </div>
+            </div>
+
+            <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
+              <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+                <h3 className="fw-bold text-dark mb-0"><i className="bi bi-image me-3"></i>Images & Assets</h3>
+              </div>
+              <div className="card-body p-4 pt-2">
+                <p className="mb-4">
+                  The design system includes a suite of brand-approved images, backgrounds, and logos. These can be used directly from the CDN.
+                </p>
+                <CodeSnippet code={`<!-- Standard Image Usage -->\n<img src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/jjjei_horizontal.png" class="img-fluid" alt="JJJEI Logo">\n\n<!-- Background Image Usage -->\n<div style="background-image: url('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/patterns/pattern1.png'); background-size: cover;">\n  ...\n</div>`} />
+                <p className="mt-3 mb-0 text-muted small">
+                  See the <Link to="/images">Images</Link> and <Link to="/patterns">Patterns</Link> preview pages for a complete directory of available assets.
+                </p>
+              </div>
+            </div>
+
+            <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
+              <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+                <h3 className="fw-bold text-dark mb-0"><i className="bi bi-type me-3"></i>Fonts & Typography</h3>
+              </div>
+              <div className="card-body p-4 pt-2">
+                <p className="mb-4">
+                  Typography is automatically configured when you import the CSS CDN. We utilize <strong>Inter</strong> for clean, highly-readable UI text, and <strong>Outfit</strong> for bold, expressive headings.
+                </p>
+                <div className="row g-4">
+                  <div className="col-12 col-md-6">
+                    <div className="p-4 border rounded bg-light">
+                      <h4 className="fw-bold" style={{ fontFamily: 'Outfit, sans-serif' }}>Heading Font (Outfit)</h4>
+                      <p className="text-muted mb-0">Automatically applied to all <code>h1</code> through <code>h6</code> tags and <code>.display-*</code> classes.</p>
+                    </div>
+                  </div>
+                  <div className="col-12 col-md-6">
+                    <div className="p-4 border rounded bg-light">
+                      <h4 className="fw-normal" style={{ fontFamily: 'Inter, sans-serif' }}>Body Font (Inter)</h4>
+                      <p className="text-muted mb-0">Automatically applied to the <code>body</code> and all standard text elements like <code>p</code> and <code>span</code>.</p>
+                    </div>
+                  </div>
+                </div>
+                <p className="mt-4 mb-0 text-muted small">
+                  See the <Link to="/typography">Typography preview page</Link> for full styling examples.
+                </p>
+              </div>
+            </div>
+
           </div>
-
-          {/* Section 3: Colors */}
-          <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
-            <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
-              <h3 className="fw-bold text-primary mb-0"><i className="bi bi-3-circle me-2"></i>Custom Color Utilities</h3>
-            </div>
-            <div className="card-body p-4">
-              <p className="mb-4">
-                In addition to standard Bootstrap colors, the Assets repository introduces specific utility classes mapped to the current theme.
-              </p>
-              
-              <ColorRow 
-                title="Page Background" 
-                desc="The default washed-out background color. It should typically be applied to your <body> or root app container."
-                classes={[{ className: 'bg-primary-subtle', label: 'Primary Subtle' }]}
-              />
-
-              <ColorRow 
-                title="Base Primary" 
-                desc="The solid, flat version of the current theme's primary color. (Note: standard elements use bg-primary-gradient by default, use this when you need a flat alternative)."
-                classes={[{ className: 'bg-primary-base', label: 'Primary Base' }]}
-              />
-
-              <ColorRow 
-                title="JJJEI Brand Colors" 
-                desc="The overarching corporate brand colors for JJJEI, completely independent of the selected sub-theme."
-                classes={[
-                  { className: 'bg-jjjei-primary', label: 'JJJEI Primary' },
-                  { className: 'bg-jjjei-secondary', label: 'JJJEI Secondary' }
-                ]}
-              />
-
-              <ColorRow 
-                title="System Utilities" 
-                desc="Standard Bootstrap functional colors re-mapped perfectly to the JJJEI palette."
-                classes={[
-                  { className: 'bg-success', label: 'Success' },
-                  { className: 'bg-danger', label: 'Danger' },
-                  { className: 'bg-warning', label: 'Warning' },
-                  { className: 'bg-info', label: 'Info' }
-                ]}
-              />
-
-              <ColorRow 
-                title="Status Colors" 
-                desc={<>Dynamic semantic status colors (0-9). Use these for badges, indicators, and data visualizations. See the <Link to="/status">Status Colors page</Link> for the full mapping and class names.</>}
-                classes={[
-                  { className: 'bg-status-0', label: 'Status 0' },
-                  { className: 'bg-status-1', label: 'Status 1' },
-                  { className: 'bg-status-2', label: 'Status 2' }
-                ]}
-              />
-
-            </div>
-          </div>
-
         </div>
       </div>
     </div>

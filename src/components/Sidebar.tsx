@@ -61,7 +61,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
       <div className={`d-flex flex-column flex-shrink-0 p-3 bg-light shadow-sm sidebar-container ${isMobileOpen ? 'open' : ''}`} style={{ width: '280px', height: '100vh' }}>
         <div className="d-flex align-items-center justify-content-between justify-content-md-center w-100 px-2 mb-3">
           <a href="/assets-preview/" className="text-decoration-none">
-            <img src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/jjjei_stacked.svg" alt="Marymart Logo" className="d-none d-lg-block" style={{ height: '64px', maxWidth: '100%', objectFit: 'contain' }} />
+            <img src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/jjjei_stacked.svg" alt="Marymart Logo" className="d-none d-lg-block" style={{ height: '80px', maxWidth: '100%', objectFit: 'contain' }} />
             <img src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/logo.svg" alt="Marymart Logo Compact" className="d-none d-md-block d-lg-none" style={{ height: '40px', maxWidth: '100%', objectFit: 'contain' }} />
           </a>
           <button onClick={onClose} className="btn-close d-md-none mt-2" aria-label="Close"></button>
@@ -81,7 +81,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
           </li>
           <li>
             <NavLink to="/status" onClick={handleNavClick} className={navLinkClass}>
-              <i className="bi bi-info-square me-3 me-md-0 me-lg-3 fs-5"></i>
+              <i className="bi bi-hand-thumbs-up-fill me-3 me-md-0 me-lg-3 fs-5"></i>
               <span className="d-inline d-md-none d-lg-inline">Status Colors</span>
             </NavLink>
           </li>
@@ -106,7 +106,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
           <li>
             <NavLink to="/setup" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-gear me-3 me-md-0 me-lg-3 fs-5"></i>
-              <span className="d-inline d-md-none d-lg-inline">Setup Instructions</span>
+              <span className="d-inline d-md-none d-lg-inline">Setup and Usage</span>
             </NavLink>
           </li>
         </ul>

@@ -110,7 +110,7 @@ const ColorPreview: React.FC = () => {
   return (
     <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
       <h1 className="mb-3 fw-bold text-center">Color Swatches</h1>
-          <p className='mb-3 text-muted text-center fs-5'>Click the color badges to <b>Copy the <i>Hex Values</i></b> of the status colors</p>
+      <p className='mb-3 text-muted text-center fs-5'>Click the color badges to <b>Copy the <i>Hex Values</i></b> of the status colors</p>
       
       <section className="row mb-5">
         <div className="col-12">
