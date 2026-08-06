@@ -1,14 +1,29 @@
 import React, { useState } from 'react';
 
 const logos = [
-  'base.svg',
-  'base-light.svg',
+  'base-dark.png',
   'base-dark.svg',
-  'logo.svg',
-  'marymart_stacked.svg',
-  'marymart_horizontal.svg',
-  'jjjei_stacked.svg',
+  'base-light.png',
+  'base-light.svg',
+  'base.png',
+  'base.svg',
+  'jjjei_horizontal-dark.png',
+  'jjjei_horizontal-light.png',
+  'jjjei_horizontal.png',
   'jjjei_horizontal.svg',
+  'jjjei_stacked-dark.png',
+  'jjjei_stacked-fit-dark.png',
+  'jjjei_stacked-fit-light.png',
+  'jjjei_stacked-fit.png',
+  'jjjei_stacked-fit.svg',
+  'jjjei_stacked-light.png',
+  'jjjei_stacked.png',
+  'jjjei_stacked.svg',
+  'logo.svg',
+  'marymart_horizontal.png',
+  'marymart_horizontal.svg',
+  'marymart_stacked.png',
+  'marymart_stacked.svg',
 ];
 
 const baseUrl = 'https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/';
@@ -16,9 +31,14 @@ const baseUrl = 'https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/l
 const ImagePreview: React.FC = () => {
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [copiedState, setCopiedState] = useState<{ id: string, type: 'url' | 'embed' } | null>(null);
 
-  const handleCopy = (text: string) => {
+  const handleCopy = (text: string, id: string, type: 'url' | 'embed') => {
     navigator.clipboard.writeText(text);
+    setCopiedState({ id, type });
+    setTimeout(() => {
+      setCopiedState(null);
+    }, 2000);
   };
 
   const filteredLogos = logos.filter(logo => logo.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -26,9 +46,9 @@ const ImagePreview: React.FC = () => {
   return (
     <>
       <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
-        <h1 className="mb-4 fw-bold text-center">Image Assets</h1>
+      <h1 className="mb-3 fw-bold text-center">Images</h1>
         
-        <div className="d-flex justify-content-center mb-4">
+        <div className="d-flex justify-content-end mb-2">
           <div className="input-group shadow-sm" style={{ maxWidth: '400px' }}>
             <span className="input-group-text bg-white border-end-0 text-muted">
               <i className="bi bi-search"></i>
@@ -54,11 +74,11 @@ const ImagePreview: React.FC = () => {
                 <div className="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
                   <div 
                     className="card-img-top p-4 d-flex align-items-center justify-content-center" 
-                    style={{ height: '220px', backgroundColor: '#f8f9fa' }}
+                    style={{ height: '220px', backgroundColor: '#dfdfdf' }}
                   >
                     <img src={url} alt={logo} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
                   </div>
-                  <div className="card-body d-flex align-items-center justify-content-between bg-white border-top">
+                  <div className="card-body d-flex align-items-center justify-content-between bg-light border-top">
                     <h6 className="card-title text-truncate mb-0 fw-semibold text-dark me-3" title={logo}>
                       {logo}
                     </h6>
@@ -66,16 +86,24 @@ const ImagePreview: React.FC = () => {
                       <button 
                         className="btn btn-light border btn-sm" 
                         title="Copy Direct URL"
-                        onClick={() => handleCopy(url)}
+                        onClick={() => handleCopy(url, logo, 'url')}
                       >
-                        <i className="bi bi-link-45deg"></i>
+                        {copiedState?.id === logo && copiedState?.type === 'url' ? (
+                          <i className="bi bi-check-lg text-success"></i>
+                        ) : (
+                          <i className="bi bi-link-45deg"></i>
+                        )}
                       </button>
                       <button 
                         className="btn btn-light border btn-sm" 
                         title="Copy Embed Code"
-                        onClick={() => handleCopy(embedSnippet)}
+                        onClick={() => handleCopy(embedSnippet, logo, 'embed')}
                       >
-                        <i className="bi bi-code-slash"></i>
+                        {copiedState?.id === logo && copiedState?.type === 'embed' ? (
+                          <i className="bi bi-check-lg text-success"></i>
+                        ) : (
+                          <i className="bi bi-code-slash"></i>
+                        )}
                       </button>
                       <a 
                         href={url} 

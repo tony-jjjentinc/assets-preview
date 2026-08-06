@@ -19,8 +19,8 @@ const TypographyPreview: React.FC = () => {
 
       <h1 className="mb-4 fw-bold text-center">Typography Preview</h1>
 
-      <section className="row mb-5">
-        <div className="col-12">
+      <section className="row mb-5 row-cols-1 row-cols-xl-2 text-center">
+        <div className="col">
           <h2 className="mb-3">Inter</h2>
           <div className="bg-white p-4 p-md-5 border rounded-4 shadow-sm" style={{ fontFamily: 'Inter, sans-serif' }}>
             <h1 className="mb-3">Heading 1 (H1)</h1>
@@ -35,10 +35,7 @@ const TypographyPreview: React.FC = () => {
             <p className="mb-0"><strong><em>This is a bold italic paragraph. The quick brown fox jumps over the lazy dog.</em></strong></p>
           </div>
         </div>
-      </section>
-
-      <section className="row mb-5">
-        <div className="col-12">
+        <div className="col">
           <h2 className="mb-3">Gill Sans Nova (Bold)</h2>
           <div className="bg-white p-4 p-md-5 border rounded-4 shadow-sm" style={{ fontFamily: '"Gill Sans Nova", sans-serif', fontWeight: 'bold' }}>
             <h1 className="mb-3 fw-bold">Heading 1 (H1)</h1>
@@ -51,6 +48,10 @@ const TypographyPreview: React.FC = () => {
             <p className="mb-0 fst-italic">This is an italic paragraph. The quick brown fox jumps over the lazy dog.</p>
           </div>
         </div>
+      </section>
+
+      <section className="row mb-5">
+        
       </section>
     </div>
   );

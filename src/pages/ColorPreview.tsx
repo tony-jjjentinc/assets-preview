@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { formatName, formatSystemStatusName, formatVariantName } from '../utils/formatName';
+import { formatName } from '../utils/formatName';
+import { colorGroups, systemColorMapping } from '../config/colorMapping';
 
 const ColorPreview: React.FC = () => {
-  const [groupedColors, setGroupedColors] = useState<Record<string, Record<string, string>>>({});
+  const [groupHexValues, setGroupHexValues] = useState<Record<string, string>>({});
   const [systemColors, setSystemColors] = useState<Record<string, string>>({});
-  const [statusColors, setStatusColors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [subtleGroups, setSubtleGroups] = useState<Record<string, boolean>>({});
 
@@ -18,17 +18,16 @@ const ColorPreview: React.FC = () => {
     const r = parseInt(cleanHex.substring(0, 2), 16);
     const g = parseInt(cleanHex.substring(2, 4), 16);
     const b = parseInt(cleanHex.substring(4, 6), 16);
-    // Bootstrap 5 default subtle background tint weight is 80%
-    // This implies 80% white and 20% base color.
-    const mix = (c: number) => Math.round(c * 0.2 + 255 * 0.8);
+    // Updated to 25% base color and 75% white for a softer look.
+    const mix = (c: number) => Math.round(c * 0.25 + 255 * 0.75);
     const sr = mix(r).toString(16).padStart(2, '0');
     const sg = mix(g).toString(16).padStart(2, '0');
     const sb = mix(b).toString(16).padStart(2, '0');
     return `#${sr}${sg}${sb}`.toUpperCase();
   };
 
-  const toggleSubtle = (baseName: string) => {
-    setSubtleGroups(prev => ({ ...prev, [baseName]: !prev[baseName] }));
+  const toggleSubtle = (groupName: string) => {
+    setSubtleGroups(prev => ({ ...prev, [groupName]: !prev[groupName] }));
   };
 
   const handleCopy = async (hex: string) => {
@@ -45,29 +44,16 @@ const ColorPreview: React.FC = () => {
     const fetchColors = async () => {
       setIsLoading(true);
       try {
-        const [gRes, sRes, stRes] = await Promise.all([
-          fetch('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/config/groupColors.json'),
-          fetch('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/config/systemColors.json'),
-          fetch('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/config/statusColors.json')
+        const cacheBuster = Date.now();
+        const [gRes, sRes] = await Promise.all([
+          fetch(`https://raw.githubusercontent.com/tony-jjjentinc/assets/main/config/groupColors.json?t=${cacheBuster}`),
+          fetch(`https://raw.githubusercontent.com/tony-jjjentinc/assets/main/config/systemColors.json?t=${cacheBuster}`)
         ]);
         const gData = await gRes.json();
         const sData = await sRes.json();
-        const stData = await stRes.json();
         
-        // Group colors by base name (e.g., 'gmo', 'admin')
-        const grouped: Record<string, Record<string, string>> = {};
-        Object.entries(gData).forEach(([key, hex]) => {
-          // Under the new format, the separator between base group and variant is a colon
-          const baseName = key.split(':')[0];
-          if (!grouped[baseName]) {
-            grouped[baseName] = {};
-          }
-          grouped[baseName][key] = hex as string;
-        });
-        
-        setGroupedColors(grouped);
+        setGroupHexValues(gData);
         setSystemColors(sData);
-        setStatusColors(stData);
       } catch (err) {
         console.error(err);
       } finally {
@@ -123,48 +109,48 @@ const ColorPreview: React.FC = () => {
 
   return (
     <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
-      <h1 className="mb-5 fw-bold text-center">Color Swatches</h1>
+      <h1 className="mb-3 fw-bold text-center">Color Swatches</h1>
+          <p className='mb-3 text-muted text-center fs-5'>Click the color badges to <b>Copy the <i>Hex Values</i></b> of the status colors</p>
       
       <section className="row mb-5">
         <div className="col-12">
-          <h2 className="mb-4">System Utility Colors</h2>
+          <h4 className="mb-4 fw-semibold">System Utility Colors</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4 m-0">
-            {Object.entries(systemColors).map(([name, hex]) => renderSwatch(name, hex, formatSystemStatusName))}
+            {Object.entries(systemColorMapping).map(([key, displayName]) => {
+              const hex = systemColors[key];
+              if (!hex) return null;
+              return renderSwatch(displayName, hex, (name) => name);
+            })}
           </div>
         </div>
       </section>
 
-      <section className="row mb-5">
-        <div className="col-12">
-          <h2 className="mb-4">Status Colors</h2>
-          <div className="bg-white p-4 border rounded-4 shadow-sm row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4 m-0">
-            {Object.entries(statusColors).map(([name, hex]) => renderSwatch(name, hex, formatSystemStatusName))}
-          </div>
-        </div>
-      </section>
-
-      {Object.entries(groupedColors).map(([baseName, colors]) => (
-        <section key={baseName} className="row mb-5">
+      {Object.entries(colorGroups).map(([groupName, variants]) => (
+        <section key={groupName} className="row mb-5">
           <div className="col-12">
             <div className="d-flex justify-content-between align-items-center mb-4">
-              <h2 className="mb-0">{formatName(baseName)} Group Colors</h2>
+              <h4 className="mb-0 fw-semibold">{groupName} Department</h4>
               <div className="form-check form-switch fs-5">
-                <label className="form-check-label fs-6 text-muted ms-2" htmlFor={`switch-${baseName}`} style={{ cursor: 'pointer' }}>
+                <label className="form-check-label fs-6 text-muted ms-2" htmlFor={`switch-${groupName}`} style={{ cursor: 'pointer' }}>
                   Background
                 </label>
                 <input 
                   className="form-check-input" 
                   type="checkbox"
                   role="switch" 
-                  id={`switch-${baseName}`}
-                  checked={!!subtleGroups[baseName]}
-                  onChange={() => toggleSubtle(baseName)}
+                  id={`switch-${groupName}`}
+                  checked={!!subtleGroups[groupName]}
+                  onChange={() => toggleSubtle(groupName)}
                   style={{ cursor: 'pointer' }}
                 />
               </div>
             </div>
-            <div className="bg-white p-4 border rounded-4 shadow-sm row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-6 g-4 m-0">
-              {Object.entries(colors).map(([name, hex]) => renderSwatch(name, hex, formatVariantName, !!subtleGroups[baseName]))}
+            <div className="bg-white p-4 border rounded-4 shadow-sm row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 m-0">
+              {Object.entries(variants).map(([variantName, cssFilename]) => {
+                const rawKey = cssFilename.replace('.css', '');
+                const hex = groupHexValues[rawKey] || '#E0E0E0';
+                return renderSwatch(variantName, hex, (name) => name, !!subtleGroups[groupName]);
+              })}
             </div>
           </div>
         </section>

@@ -5,7 +5,7 @@ const ComponentPreview: React.FC = () => {
 
   return (
     <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
-      <h1 className="mb-4 fw-bold text-center">Component Preview</h1>
+      <h1 className="mb-3 fw-bold text-center">Web Components Demo</h1>
 
       <section className="row mb-5">
         <div className="col-12">
@@ -321,6 +321,11 @@ const ComponentPreview: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <div className="alert alert-info border-0 shadow-sm mx-auto mb-5 mt-5" style={{ maxWidth: '800px' }}>
+        <i className="bi bi-info-circle-fill me-2"></i>
+        <strong>Note:</strong> All standard Bootstrap 5 components are supported out of the box and will automatically inherit the active theme colors. View the <a href="https://getbootstrap.com/docs/5.3/components/" target="_blank" rel="noopener noreferrer" className="alert-link">official Bootstrap 5 Components documentation</a> for complete usage details.
+      </div>
     </div>
   );
 };

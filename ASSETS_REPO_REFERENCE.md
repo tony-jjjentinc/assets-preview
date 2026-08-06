@@ -4,21 +4,25 @@ The assets directory are served via Github Pages
 
 ## Base URL Configuration
 
-To use these assets in your projects, you must construct the base URL for the GitHub Pages deployment. 
-Based on this repository, the base URL is:
+To use these assets in your projects, it is highly recommended to use **jsDelivr**, a high-performance CDN for GitHub repositories.
+
+**Recommended Base URL (jsDelivr):**
 `https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/`
 
-You can define this base URL dynamically in web projects (e.g., passing it to the HTML template) or hardcode it in the frontend code.
+**Alternative Base URL (GitHub Pages):**
+`https://tony-jjjentinc.github.io/assets/`
 
 ---
 
 ## 1. Styling Integration (CSS/Colors)
 
 ### Static Implementation
-Replace the default Bootstrap 5 CSS CDN link in your web projects with the GitHub Pages URL pointing to the pre-compiled group CSS. These files bundle both the Bootstrap 5 core and the custom theme.
+Include the default Bootstrap 5 CSS CDN link in your web projects, followed by the CDN URL pointing to the pre-compiled group CSS. These custom files are lightweight and only override the Bootstrap 5 core theme colors and components.
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/admin.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- jsDelivr (Recommended) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v2/admin.css">
 ```
 
 ### Dynamic Implementation (Code.gs)
@@ -29,7 +33,7 @@ You can dynamically pass the appropriate group CSS URL to the frontend template,
 function doGet(e) {
   var group = e.parameter.group || 'admin';
   var template = HtmlService.createTemplateFromFile('Index');
-  template.cssUrl = 'https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/' + group + '.css';
+  template.cssUrl = 'https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v2/' + group + '.css';
   return template.evaluate();
 }
 ```
@@ -37,6 +41,26 @@ function doGet(e) {
 **Index.html:**
 ```html
 <link rel="stylesheet" href="<?= cssUrl ?>">
+```
+
+### Custom Theme Colors & Utilities
+
+Beyond the standard Bootstrap 5 color classes (`primary`, `secondary`, `success`, etc.), these compiled CSS files include custom colors and utilities specifically built for this project:
+
+#### 1. The Base Background Utility
+- **`.bg-primary-base`**: A custom background utility designed for page backgrounds. While `.bg-primary-subtle` uses a subtle tint of the specific sub-group's color (e.g., `hr:hr_operations`), `.bg-primary-base` always uses a subtle tint of the **parent group's base color** (e.g., `hr`). This ensures a consistent, non-overwhelming background while the specific variant color is used for active UI elements. It automatically adapts to dark mode.
+
+#### 2. Semantic Status Colors
+The project dynamically injects semantic status colors into the standard Bootstrap theming engine. This means you have access to the full suite of Bootstrap utility classes (like `.bg-*`, `.text-*`, `.border-*`, `.btn-*`, etc.) for all defined custom statuses. 
+
+Available status names are numeric keys from `0` to `9` (e.g., `status-0`, `status-1`, etc.).
+
+**Example Usage:**
+```html
+<div class="bg-primary-base p-3">
+  <span class="badge bg-status-1 text-white">Urgent</span>
+  <div class="alert alert-status-3 mt-2">Awaiting review...</div>
+</div>
 ```
 
 ### Bootstrap JavaScript Bundle
@@ -50,18 +74,14 @@ This repository only serves customized CSS. For interactive Bootstrap components
 
 ## 2. Fonts Usage
 
-Provide explicit `@font-face` CSS declarations inside a `<style>` tag within the web projects HTML files.
+**Inter Font (Automatic):**
+The primary `Inter` font is now **automatically injected** into your generated group CSS files. As long as you import your group's CSS file, the Inter font is ready to use!
+
+**Gill Sans Nova (Manual):**
+If you need to use the secondary `Gill Sans Nova` font, provide an explicit `@font-face` CSS declaration inside a `<style>` tag within your web project's HTML files.
 
 ```html
 <style>
-/* Inter Font */
-@font-face {
-    font-family: 'Inter';
-    src: url('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/fonts/Inter.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-
 /* Gill Sans Nova Bold */
 @font-face {
     font-family: 'Gill Sans Nova';
@@ -116,9 +136,15 @@ Apply the provided SVGs as background textures to containers using CSS.
 - `Inter.woff2`
 
 ### Logos (`/images/logo/`)
+- `.gitkeep`
+- `base-dark.svg`
+- `base-light.svg`
+- `base.svg`
+- `jjjei_horizontal.svg`
+- `jjjei_stacked.svg`
 - `logo.svg`
-- `marymart_compact.svg`
 - `marymart_horizontal.svg`
+- `marymart_stacked.svg`
 
 ### Background Patterns (`/images/misc/background-pattern/`)
 - `bubbles.svg`
@@ -127,14 +153,16 @@ Apply the provided SVGs as background textures to containers using CSS.
 - `diagonal-stripes.svg`
 - `hexagons.svg`
 - `texture.svg`
+- `texture2.svg`
 - `topography.svg`
 
-### Colors (`/colors/`)
-- `admin.css`, `admin_1.css`, `admin_2.css`, `admin_3.css`, `admin_4.css`, `admin_5.css`, `admin_6.css`
-- `controller.css`, `controller_1.css`, `controller_2.css`, `controller_3.css`, `controller_4.css`, `controller_5.css`, `controller_6.css`, `controller_7.css`
-- `facilities.css`, `facilities_1.css`, `facilities_2.css`, `facilities_3.css`, `facilities_4.css`, `facilities_5.css`, `facilities_6.css`, `facilities_7.css`, `facilities_8.css`
-- `gmo.css`, `gmo_1.css`, `gmo_2.css`, `gmo_3.css`, `gmo_4.css`, `gmo_5.css`, `gmo_6.css`, `gmo_7.css`, `gmo_8.css`
-- `hr.css`, `hr_1.css`, `hr_2.css`, `hr_3.css`, `hr_4.css`, `hr_5.css`, `hr_6.css`, `hr_7.css`, `hr_8.css`
-- `leasing.css`, `leasing_1.css`, `leasing_2.css`, `leasing_3.css`, `leasing_4.css`, `leasing_5.css`, `leasing_6.css`, `leasing_7.css`, `leasing_8.css`
-- `procurement.css`, `procurement_1.css`, `procurement_2.css`, `procurement_3.css`
-- `treasury.css`, `treasury_1.css`, `treasury_2.css`, `treasury_3.css`, `treasury_4.css`
+### Colors (`/colors/v2/`)
+*(Note: CSS is now versioned and group variations use a colon `:` separator)*
+- `jjjei_admin:0.css` to `jjjei_admin:5.css`
+- `jjjei_controller:0.css` to `jjjei_controller:2.css`
+- `jjjei_facilities:0.css` to `jjjei_facilities:6.css`
+- `jjjei_gmo:0.css` to `jjjei_gmo:3.css`
+- `jjjei_hr:0.css` to `jjjei_hr:2.css`
+- `jjjei_leasing:0.css` to `jjjei_leasing:3.css`
+- `jjjei_procurement_and_inventory:0.css` to `jjjei_procurement_and_inventory:2.css`
+- `jjjei_treasury:0.css` to `jjjei_treasury:3.css`

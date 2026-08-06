@@ -1,66 +1,33 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useDynamicCss } from '../hooks/useDynamicCss';
-import { formatName } from '../utils/formatName';
+import { colorGroups } from '../config/colorMapping';
 
 export const FloatingToolbar: React.FC = () => {
-  const [activeTheme, setActiveTheme] = useDynamicCss('gmo');
-  const [availableThemes, setAvailableThemes] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [activeTheme, setActiveTheme] = useDynamicCss('jjjei_gmo:0');
 
-  useEffect(() => {
-    const fetchGroups = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/config/groupColors.json');
-        const data = await res.json();
-        
-        // Use all available group variants as selectable themes
-        setAvailableThemes(Object.keys(data));
-      } catch (err) {
-        console.error('Failed to fetch available groups:', err);
-      } finally {
-        setIsLoading(false);
+  const groups = Object.keys(colorGroups);
+
+  const activeGroup = useMemo(() => {
+    for (const [groupName, variants] of Object.entries(colorGroups)) {
+      if (Object.values(variants).includes(`${activeTheme}.css`)) {
+        return groupName;
       }
-    };
-    
-    fetchGroups();
-  }, []);
+    }
+    return groups[0];
+  }, [activeTheme, groups]);
 
-  // activeTheme looks like "group" or "group:variant"
-  const activeGroup = activeTheme.split(':')[0] || 'gmo';
-  const activeVariant = activeTheme.includes(':') ? activeTheme.split(':')[1] : 'base color';
-
-  // Extract unique groups
-  const groups = useMemo(() => {
-    const groupSet = new Set<string>();
-    availableThemes.forEach(theme => {
-      groupSet.add(theme.split(':')[0]);
-    });
-    return Array.from(groupSet);
-  }, [availableThemes]);
-
-  // Extract variants for the active group
-  const variants = useMemo(() => {
-    const groupVariants: string[] = [];
-    availableThemes.forEach(theme => {
-      const parts = theme.split(':');
-      if (parts[0] === activeGroup) {
-        groupVariants.push(parts[1] || 'base color');
-      }
-    });
-    return groupVariants;
-  }, [availableThemes, activeGroup]);
+  const variants = colorGroups[activeGroup] || {};
+  
+  const activeVariantFilename = `${activeTheme}.css`;
 
   const handleGroupChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newGroup = e.target.value;
-    // Default to the un-varianted version if it exists, otherwise the first variant
-    const defaultTheme = availableThemes.includes(newGroup) ? newGroup : availableThemes.find(t => t.startsWith(`${newGroup}:`)) || newGroup;
-    setActiveTheme(defaultTheme);
+    const newTheme = colorGroups[newGroup]["Base"].replace('.css', '');
+    setActiveTheme(newTheme);
   };
 
   const handleVariantChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newVariant = e.target.value;
-    const newTheme = newVariant === 'base color' ? activeGroup : `${activeGroup}:${newVariant}`;
+    const newTheme = e.target.value.replace('.css', '');
     setActiveTheme(newTheme);
   };
 
@@ -91,36 +58,26 @@ export const FloatingToolbar: React.FC = () => {
         value={activeGroup} 
         onChange={handleGroupChange}
         aria-label="Select theme group"
-        disabled={isLoading || groups.length === 0}
       >
-        {isLoading ? (
-          <option value={activeGroup}>Loading...</option>
-        ) : (
-          groups.map((g) => (
-            <option key={g} value={g}>
-              {formatName(g)}
-            </option>
-          ))
-        )}
+        {groups.map((g) => (
+          <option key={g} value={g}>
+            {g}
+          </option>
+        ))}
       </select>
 
       <select 
         className="form-select border-1 rounded-pill shadow-none" 
         style={{ fontWeight: 500, minWidth: '120px' }}
-        value={activeVariant} 
+        value={activeVariantFilename} 
         onChange={handleVariantChange}
         aria-label="Select theme variant"
-        disabled={isLoading || variants.length === 0}
       >
-        {isLoading ? (
-          <option value={activeVariant}>Loading...</option>
-        ) : (
-          variants.map((v) => (
-            <option key={v} value={v}>
-              {formatName(v)}
-            </option>
-          ))
-        )}
+        {Object.entries(variants).map(([variantName, filename]) => (
+          <option key={filename} value={filename}>
+            {variantName}
+          </option>
+        ))}
       </select>
     </div>
   );

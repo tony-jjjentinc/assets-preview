@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 const PATTERN_CONFIG: Record<string, number> = {
-  'circuit-board.svg': 350,
+  'circuit-board.svg': 200,
   'topography.svg': 670,
-  'bubbles.svg': 200,
-  'diagonal-lines.svg': 50,
+  'bubbles.svg': 100,
+  'diagonal-lines.svg': 30,
   'diagonal-stripes.svg': 30,
-  'hexagons.svg': 40,
-  'texture.svg': 20,
-  'texture2.svg': 35,
+  'hexagons.svg': 30,
+  'texture.svg': 15,
+  'texture2.svg': 25,
 };
 const PATTERNS = Object.keys(PATTERN_CONFIG);
 

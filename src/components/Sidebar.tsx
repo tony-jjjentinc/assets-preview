@@ -46,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
   };
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) => 
-    `nav-link custom-nav-link d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start ${isActive ? 'active bg-brand-primary shadow-sm text-light' : 'link-dark'}`;
+    `nav-link custom-nav-link d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start ${isActive ? 'active bg-jjjei-primary shadow-sm text-light fw-bold' : 'link-dark'}`;
 
   return (
     <>
@@ -80,6 +80,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/status" onClick={handleNavClick} className={navLinkClass}>
+              <i className="bi bi-info-square me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Status Colors</span>
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/images" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-images me-3 me-md-0 me-lg-3 fs-5"></i>
               <span className="d-inline d-md-none d-lg-inline">Images</span>
@@ -101,12 +107,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
             <NavLink to="/setup" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-gear me-3 me-md-0 me-lg-3 fs-5"></i>
               <span className="d-inline d-md-none d-lg-inline">Setup Instructions</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/templates" onClick={handleNavClick} className={navLinkClass}>
-              <i className="bi bi-layout-text-window-reverse me-3 me-md-0 me-lg-3 fs-5"></i>
-              <span className="d-inline d-md-none d-lg-inline">Templates</span>
             </NavLink>
           </li>
         </ul>
