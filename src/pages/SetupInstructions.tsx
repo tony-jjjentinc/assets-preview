@@ -207,6 +207,21 @@ const SetupInstructions: React.FC = () => {
 
             <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
               <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
+                <h3 className="fw-bold text-dark mb-0"><i className="bi bi-star me-3"></i>Icons</h3>
+              </div>
+              <div className="card-body p-4 pt-2">
+                <p className="mb-4">
+                  For project icons, we highly recommend using <strong>Bootstrap Icons</strong>, as it perfectly complements the Bootstrap 5 foundation. It includes thousands of high-quality, open-source icons.
+                </p>
+                <CodeSnippet code={`<!-- Add via CDN -->\n<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">\n\n<!-- Usage -->\n<i class="bi bi-heart-fill text-danger"></i>`} />
+                <p className="mt-3 mb-0 text-muted small">
+                  See the <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener noreferrer">official Bootstrap Icons documentation</a> for the full icon search and guide.
+                </p>
+              </div>
+            </div>
+
+            <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
+              <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
                 <h3 className="fw-bold text-dark mb-0"><i className="bi bi-type me-3"></i>Fonts & Typography</h3>
               </div>
               <div className="card-body p-4 pt-2">
