@@ -1,30 +1,85 @@
 import React, { useState, useEffect } from 'react';
 import { statusColors } from '../config/statusConfig';
+import { systemColorMapping } from '../config/colorMapping';
+
+const getSubtleHex = (hex: string): string => {
+  if (!hex || hex === '#------') return '#------';
+  let cleanHex = hex.replace('#', '');
+  if (cleanHex.length === 3) {
+    cleanHex = cleanHex.split('').map(c => c + c).join('');
+  }
+  const r = parseInt(cleanHex.substring(0, 2), 16);
+  const g = parseInt(cleanHex.substring(2, 4), 16);
+  const b = parseInt(cleanHex.substring(4, 6), 16);
+  const mix = (c: number) => Math.round(c * 0.25 + 255 * 0.75);
+  const sr = mix(r).toString(16).padStart(2, '0');
+  const sg = mix(g).toString(16).padStart(2, '0');
+  const sb = mix(b).toString(16).padStart(2, '0');
+  return `#${sr}${sg}${sb}`.toUpperCase();
+};
+
+interface StatusBadgeProps {
+  className: string;
+  badgeClass: string;
+  extraClass?: string;
+  hex: string;
+  copiedText: string | null;
+  onCopy: (text: string) => void;
+}
+
+const StatusBadge: React.FC<StatusBadgeProps> = ({ className, badgeClass, extraClass = '', hex, copiedText, onCopy }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const isCopied = copiedText === hex;
+
+  return (
+    <span 
+      className={`${badgeClass} badge p-2 fw-normal ${extraClass}`} 
+      style={{ cursor: 'pointer', transition: 'all 0.2s ease-in-out', minWidth: '170px', display: 'inline-block', textAlign: 'center' }}
+      onClick={() => onCopy(hex)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      title="Click to copy hex value, hover to reveal hex value"
+    >
+      {isCopied ? (
+        <><i className="bi bi-check2 me-1"></i>Copied</>
+      ) : isHovered ? (
+        <span className="fw-semibold">{hex}</span>
+      ) : (
+        className
+      )}
+    </span>
+  );
+};
 
 const StatusPreview: React.FC = () => {
   const [hexValues, setHexValues] = useState<Record<string, string>>({});
-  const [copiedHex, setCopiedHex] = useState<string | null>(null);
+  const [systemColors, setSystemColors] = useState<Record<string, string>>({});
+  const [copiedText, setCopiedText] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchHex = async () => {
+    const fetchData = async () => {
       try {
         const cacheBuster = Date.now();
-        const res = await fetch(`https://raw.githubusercontent.com/tony-jjjentinc/assets/main/config/statusColors.json?t=${cacheBuster}`);
-        const data = await res.json();
-        setHexValues(data);
+        const [statusRes, sysRes] = await Promise.all([
+          fetch(`https://raw.githubusercontent.com/tony-jjjentinc/assets/main/config/statusColors.json?t=${cacheBuster}`),
+          fetch(`https://raw.githubusercontent.com/tony-jjjentinc/assets/main/config/systemColors.json?t=${cacheBuster}`)
+        ]);
+        const statusData = await statusRes.json();
+        const sysData = await sysRes.json();
+        setHexValues(statusData);
+        setSystemColors(sysData);
       } catch (err) {
-        console.error('Failed to fetch status hex values', err);
+        console.error('Failed to fetch color data', err);
       }
     };
-    fetchHex();
+    fetchData();
   }, []);
 
   const handleCopy = async (text: string) => {
-    if (text === '#------') return;
     try {
       await navigator.clipboard.writeText(text);
-      setCopiedHex(text);
-      setTimeout(() => setCopiedHex(null), 2000);
+      setCopiedText(text);
+      setTimeout(() => setCopiedText(null), 2000);
     } catch (err) {
       console.error('Failed to copy', err);
     }
@@ -32,71 +87,125 @@ const StatusPreview: React.FC = () => {
 
   return (
     <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
-      <h1 className="mb-4 fw-bold text-center">Status Colors</h1>
-      <div className="bg-white p-4 border rounded-4 shadow-sm mb-5">
-        <div className="table-responsive">
-          <table className="table table-hover align-middle mb-0">
-            <thead className="table-light">
-              <tr>
-                <th scope="col">Status Intensity</th>
-                <th scope="col">Meaning / Usage</th>
-                <th scope="col" className="ps-3">Hex Value</th>
-                <th scope="col">Default Classes</th>
-                <th scope="col">Subtle Classes</th>
-              </tr>
-            </thead>
-            <tbody>
-              {statusColors.map((status) => {
-                const statusIndex = status.class.replace('status-', '');
-                const hex = hexValues[statusIndex] || '#------';
-                const isCopied = copiedHex === hex;
+      <div className="row justify-content-center">
+        <div className="col-12">
+
+          <div className="mb-4 text-center">
+            <h1 className="mb-3 fw-bold">System and Status Colors</h1>
+            <p className="text-muted fs-5 mb-4">Functional system utility colors and dynamic status level indicators.</p>
+          </div>
+
+          {/* Status Colors Table Section */}
+          <section className="mb-5">
+            <h4 className="mb-4 fw-semibold">Status Colors</h4>
+            <div className="bg-white p-4 border rounded-4 shadow-sm">
+              <div className="table-responsive">
+                <table className="table table-hover align-middle mb-0 text-nowrap">
+                  <thead className="table-light">
+                    <tr>
+                      <th scope="col">Intensity</th>
+                      <th scope="col">Meaning / Usage</th>
+                      <th scope="col">Default Color</th>
+                      <th scope="col">Subtle Color</th>
+                      <th scope="col" title='The class name used to reference the color on the project'>Class Name</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {statusColors.map((status) => {
+                      const statusIndex = status.class.replace('status-', '');
+                      const hex = hexValues[statusIndex] ? hexValues[statusIndex].toUpperCase() : '#------';
+                      const subtleHex = getSubtleHex(hex);
+                      const defaultClass = `bg-${status.class}`;
+                      const subtleClass = `bg-${status.class}-subtle`;
+                      const isClassCopied = copiedText === status.class;
+                      
+                      return (
+                        <tr key={status.class}>
+                          <td className="fw-normal">Status Level {statusIndex}</td>
+                          <td className="fw-medium">{status.meaning}</td>
+                          <td>
+                            <StatusBadge 
+                              className={defaultClass} 
+                              badgeClass={defaultClass} 
+                              hex={hex} 
+                              copiedText={copiedText} 
+                              onCopy={handleCopy} 
+                            />
+                          </td>
+                          <td>
+                            <StatusBadge 
+                              className={subtleClass} 
+                              badgeClass={subtleClass} 
+                              extraClass={`text-dark border border-${status.class}-subtle`}
+                              hex={subtleHex} 
+                              copiedText={copiedText} 
+                              onCopy={handleCopy} 
+                            />
+                          </td>
+                          <td>
+                            <code 
+                              className="text-muted font-monospace px-2 py-1 rounded bg-light border" 
+                              style={{ cursor: 'pointer', userSelect: 'none' }} 
+                              onClick={() => handleCopy(status.class)}
+                              title="Click to copy style class"
+                            >
+                              {isClassCopied ? <><i className="bi bi-check2 text-success me-1"></i>Copied</> : status.class}
+                            </code>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <p className="mt-4 mb-0 text-center text-muted">Note: Click any color badge to copy its hex value (hover to reveal). Click the style class code to copy the class name.</p>
+              </div>
+            </div>
+          </section>
+
+          {/* System Utility Colors Section */}
+          <section className="mb-5">
+            <h4 className="mb-4 fw-semibold">Default System Colors</h4>
+            <div className="bg-white p-4 border rounded-4 shadow-sm row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 g-4 m-0">
+              {Object.entries(systemColorMapping).map(([key, displayName]) => {
+                let hex = systemColors[key];
+                if (!hex && key === 'primary') {
+                  const styleVal = typeof window !== 'undefined' ? getComputedStyle(document.documentElement).getPropertyValue('--bs-primary').trim() : '';
+                  hex = styleVal ? styleVal.toUpperCase() : '#008000';
+                }
+                if (!hex) return null;
+                const isCopied = copiedText === hex;
+
                 return (
-                  <tr key={status.class}>
-                    <td className="fw-bold">Status #{statusIndex}</td>
-                    <td className="fw-medium">{status.meaning}</td>
-                    <td className="ps-3">
-                      <div className="d-flex align-items-center gap-2">
-                        <div 
-                          style={{ width: '20px', height: '20px', backgroundColor: hex !== '#------' ? hex : 'transparent', borderRadius: '4px', border: '1px solid rgba(0,0,0,0.1)' }}
-                        ></div>
-                        <span className="fw-monospace text-muted">{hex}</span>
-                        <button 
-                          className="btn btn-sm btn-light border d-flex align-items-center justify-content-center" 
-                          style={{ width: '32px', height: '32px' }}
-                          onClick={() => handleCopy(hex)}
-                          title="Copy Hex"
-                          disabled={hex === '#------'}
-                        >
-                          {isCopied ? <i className="bi bi-check-lg text-success"></i> : <i className="bi bi-clipboard"></i>}
-                        </button>
-                      </div>
-                    </td>
-                    <td>
+                  <div key={key} className="col">
+                    <div 
+                      className="d-flex flex-column align-items-center h-100"
+                      style={{ cursor: 'pointer', transition: 'transform 0.2s ease' }}
+                      onClick={() => handleCopy(hex)}
+                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                      title="Click to copy hex value"
+                    >
+                      <div 
+                        style={{ width: '100%', height: '67px', backgroundColor: hex, borderRadius: '4px', boxShadow: '0 8px 16px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.05)' }}
+                        className="mb-3"
+                      ></div>
+                      <span className="fw-bold text-center w-100 text-capitalize" style={{ fontSize: '0.9rem' }}>{displayName}</span>
                       <span 
-                        className={`badge bg-${status.class} p-2`} 
-                        style={{ cursor: 'pointer', transition: 'all 0.2s' }}
-                        onClick={() => handleCopy(`bg-${status.class}`)}
-                        title="Click to copy class"
+                        className={`small ${isCopied ? 'text-success fw-bold' : 'text-muted'}`} 
+                        style={{ fontSize: '0.8rem', fontFamily: 'monospace', transition: 'color 0.2s ease' }}
                       >
-                        {copiedHex === `bg-${status.class}` ? <><i className="bi bi-check2"></i> Copied</> : `bg-${status.class}`}
+                        {isCopied ? (
+                          <><i className="bi bi-check2 me-1"></i>Copied!</>
+                        ) : (
+                          hex
+                        )}
                       </span>
-                    </td>
-                    <td>
-                      <span 
-                        className={`badge bg-${status.class}-subtle text-${status.class} p-2 border border-${status.class}-subtle`} 
-                        style={{ cursor: 'pointer', transition: 'all 0.2s' }}
-                        onClick={() => handleCopy(`bg-${status.class}-subtle`)}
-                        title="Click to copy class"
-                      >
-                        {copiedHex === `bg-${status.class}-subtle` ? <><i className="bi bi-check2"></i> Copied</> : `bg-${status.class}-subtle`}
-                      </span>
-                    </td>
-                  </tr>
+                    </div>
+                  </div>
                 );
               })}
-            </tbody>
-          </table>
-          <p className='mt-5 mb-0 text-center'>Note: Click the color badges to <b>copy the <i>Class</i> and <i>Hex Values</i></b> of the status colors</p>
+            </div>
+          </section>
         </div>
       </div>
     </div>

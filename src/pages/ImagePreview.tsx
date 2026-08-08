@@ -31,14 +31,12 @@ const baseUrl = 'https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/l
 const ImagePreview: React.FC = () => {
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [copiedState, setCopiedState] = useState<{ id: string, type: 'url' | 'embed' } | null>(null);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  const handleCopy = (text: string, id: string, type: 'url' | 'embed') => {
+  const handleCopy = (text: string, logoName: string) => {
     navigator.clipboard.writeText(text);
-    setCopiedState({ id, type });
-    setTimeout(() => {
-      setCopiedState(null);
-    }, 2000);
+    setCopiedId(logoName);
+    setTimeout(() => setCopiedId(null), 1500);
   };
 
   const filteredLogos = logos.filter(logo => logo.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -46,115 +44,94 @@ const ImagePreview: React.FC = () => {
   return (
     <>
       <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
-      <h1 className="mb-3 fw-bold text-center">Images</h1>
-        
-        <div className="d-flex justify-content-end mb-2">
-          <div className="input-group shadow-sm" style={{ maxWidth: '400px' }}>
-            <span className="input-group-text bg-white border-end-0 text-muted">
-              <i className="bi bi-search"></i>
-            </span>
-            <input 
-              type="text" 
-              className="form-control border-start-0 ps-0 shadow-none" 
-              placeholder="Search assets..." 
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-        </div>
+        <div className="row justify-content-center">
+          <div className="col-12">
+            
+            <div className="mb-4 text-center">
+              <h1 className="mb-3 fw-bold">Images</h1>
+              <p className="text-muted fs-5 mb-4">Official brand logos and image assets.</p>
+            </div>
 
-        <div className="bg-white p-4 border rounded-4 shadow-sm">
-          {filteredLogos.length > 0 ? (
-            <div className="row g-4">
-            {filteredLogos.map((logo, index) => {
-            const url = `${baseUrl}${logo}`;
-            const embedSnippet = `<img src="${url}" alt="${logo}" />`;
-            return (
-              <div className="col-12 col-md-6 col-lg-4" key={index}>
-                <div className="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
-                  <div 
-                    className="card-img-top p-4 d-flex align-items-center justify-content-center" 
-                    style={{ height: '220px', backgroundColor: '#dfdfdf' }}
-                  >
-                    <img src={url} alt={logo} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
-                  </div>
-                  <div className="card-body d-flex align-items-center justify-content-between bg-light border-top">
-                    <h6 className="card-title text-truncate mb-0 fw-semibold text-dark me-3" title={logo}>
-                      {logo}
-                    </h6>
-                    <div className="btn-group shadow-sm">
-                      <button 
-                        className="btn btn-light border btn-sm" 
-                        title="Copy Direct URL"
-                        onClick={() => handleCopy(url, logo, 'url')}
-                      >
-                        {copiedState?.id === logo && copiedState?.type === 'url' ? (
-                          <i className="bi bi-check-lg text-success"></i>
-                        ) : (
-                          <i className="bi bi-link-45deg"></i>
-                        )}
-                      </button>
-                      <button 
-                        className="btn btn-light border btn-sm" 
-                        title="Copy Embed Code"
-                        onClick={() => handleCopy(embedSnippet, logo, 'embed')}
-                      >
-                        {copiedState?.id === logo && copiedState?.type === 'embed' ? (
-                          <i className="bi bi-check-lg text-success"></i>
-                        ) : (
-                          <i className="bi bi-code-slash"></i>
-                        )}
-                      </button>
-                      <a 
-                        href={url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="btn btn-light border btn-sm"
-                        title="Open/Download"
-                      >
-                        <i className="bi bi-download"></i>
-                      </a>
-                      <button 
-                        className="btn btn-light border btn-sm" 
-                        title="Fullscreen Preview"
-                        onClick={() => setFullscreenImage(url)}
-                      >
-                        <i className="bi bi-arrows-fullscreen"></i>
-                      </button>
-                    </div>
-                  </div>
+            <div className="card border-0 shadow-sm rounded-4 overflow-hidden mb-5">
+              <div className="card-header bg-white border-bottom pt-4 px-4 pb-3 d-flex justify-content-end">
+                <div className="input-group" style={{ maxWidth: '300px' }}>
+                  <span className="input-group-text bg-light border-end-0 text-muted"><i className="bi bi-search"></i></span>
+                  <input 
+                    type="text" 
+                    className="form-control border-start-0 ps-0 bg-light" 
+                    placeholder="Search assets..." 
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
                 </div>
               </div>
-            );
-          })}
-          </div>
-          ) : (
-            <div className="text-center py-5 text-muted">
-              <i className="bi bi-search fs-1 mb-3 d-block opacity-50"></i>
-              <p className="mb-0">No assets found matching "{searchQuery}"</p>
+
+              <div className="card-body p-4 bg-light">
+                {filteredLogos.length > 0 ? (
+                  <div className="row g-3">
+                    {filteredLogos.map((logo) => {
+                      const url = `${baseUrl}${logo}`;
+                      const isDarkVariant = logo.includes('-light') || logo.includes('base-light');
+                      const isCopied = copiedId === logo;
+
+                      return (
+                        <div className="col-12 col-sm-6 col-md-4 col-lg-3" key={logo}>
+                          <div className="card h-100 border bg-white rounded-3 shadow-sm overflow-hidden">
+                            <div 
+                              className={`p-4 d-flex align-items-center justify-content-center position-relative ${isDarkVariant ? 'bg-dark' : 'bg-white'}`}
+                              style={{ height: '160px', cursor: 'pointer' }}
+                              onClick={() => setFullscreenImage(url)}
+                              title="Click to expand"
+                            >
+                              <img 
+                                src={url} 
+                                alt={logo} 
+                                style={{ maxWidth: '85%', maxHeight: '85%', objectFit: 'contain' }} 
+                              />
+                            </div>
+
+                            <div className="card-body p-3 d-flex align-items-center justify-content-between border-top">
+                              <span className="small text-truncate fw-medium text-dark me-2" title={logo}>
+                                {logo}
+                              </span>
+
+                              <button 
+                                className={`btn btn-sm ${isCopied ? 'btn-success' : 'btn-outline-secondary border-0'}`}
+                                onClick={() => handleCopy(url, logo)}
+                                title="Copy CDN Link"
+                                style={{ width: '32px', height: '32px', padding: 0 }}
+                              >
+                                {isCopied ? <i className="bi bi-check-lg"></i> : <i className="bi bi-clipboard"></i>}
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div className="text-center py-5 text-muted bg-white rounded-3 border">
+                    <i className="bi bi-search fs-2 mb-2 d-block opacity-50"></i>
+                    <p className="mb-0">No assets found matching "{searchQuery}"</p>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
+
+          </div>
         </div>
       </div>
 
       {fullscreenImage && (
         <div 
           className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-          style={{ zIndex: 9999, backgroundColor: 'rgba(0,0,0,0.85)', backdropFilter: 'blur(10px)' }}
+          style={{ zIndex: 9999, backgroundColor: 'rgba(0, 0, 0, 0.8)' }}
           onClick={() => setFullscreenImage(null)}
         >
-          <button 
-            className="btn btn-dark position-absolute top-0 end-0 m-4 rounded-circle"
-            onClick={() => setFullscreenImage(null)}
-            style={{ width: '48px', height: '48px' }}
-          >
-            <i className="bi bi-x-lg"></i>
-          </button>
           <img 
             src={fullscreenImage} 
             alt="Fullscreen preview" 
-            style={{ maxWidth: '90vw', maxHeight: '90vh', objectFit: 'contain' }} 
-            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: '85vw', maxHeight: '85vh', objectFit: 'contain' }} 
           />
         </div>
       )}

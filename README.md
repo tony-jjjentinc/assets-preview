@@ -1,1 +1,1 @@
-# Assets Preview Page
+# JJJEI System Design Hub

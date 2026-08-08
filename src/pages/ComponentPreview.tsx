@@ -5,11 +5,14 @@ const ComponentPreview: React.FC = () => {
 
   return (
     <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
-      <h1 className="mb-3 fw-bold text-center">Web Components Demo</h1>
+      <div className="mb-5 text-center">
+        <h1 className="mb-3 fw-bold">Components</h1>
+        <p className="text-muted fs-5 mb-4">Interactive preview of core UI components used on dashboards</p>
+      </div>
 
       <section className="row mb-5">
         <div className="col-12">
-          <h2 className="mb-3">Buttons</h2>
+          <h4 className="h4 mb-4 fw-semibold">Buttons</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <h3 className="h5 mb-3">Solid Buttons</h3>
             <div className="d-flex flex-wrap gap-3 mb-4">
@@ -44,7 +47,7 @@ const ComponentPreview: React.FC = () => {
 
       <section className="row mb-5">
         <div className="col-12">
-          <h2 className="mb-3">Cards</h2>
+          <h4 className="h4 mb-4 fw-semibold">Cards</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <div className="row row-cols-1 row-cols-md-3 g-4">
               <div className="col">
@@ -81,7 +84,7 @@ const ComponentPreview: React.FC = () => {
 
       <section className="row row-cols-1 row-cols-md-2">
         <div className="col-12 mb-5">
-          <h2 className="mb-3">Alerts</h2>
+          <h4 className="h4 mb-4 fw-semibold">Alerts</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <div className="alert alert-primary" role="alert">
               A simple primary alert, check it out!
@@ -96,7 +99,7 @@ const ComponentPreview: React.FC = () => {
         </div>
 
         <div className="col-12 h-100 mb-5">
-          <h2 className="mb-3">List Group</h2>
+          <h4 className="h4 mb-4 fw-semibold">List Group</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <ul className="list-group">
               <li className="list-group-item active" aria-current="true">An active item</li>
@@ -111,7 +114,7 @@ const ComponentPreview: React.FC = () => {
 
       <section className="row mb-5">
         <div className="col-12">
-          <h2 className="mb-3">Badges</h2>
+          <h4 className="h4 mb-4 fw-semibold">Badges</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <div className="d-flex flex-wrap gap-3">
               <span className="badge bg-primary">Primary</span>
@@ -128,7 +131,7 @@ const ComponentPreview: React.FC = () => {
 
       <section className="row mb-5">
         <div className="col-12">
-          <h2 className="mb-3">Pagination</h2>
+          <h4 className="h4 mb-4 fw-semibold">Pagination</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <nav aria-label="Page navigation example">
               <ul className="pagination mb-0">
@@ -145,7 +148,7 @@ const ComponentPreview: React.FC = () => {
 
       <section className="row mb-5">
         <div className="col-12">
-          <h2 className="mb-3">Breadcrumb</h2>
+          <h4 className="h4 mb-4 fw-semibold">Breadcrumb</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <nav aria-label="breadcrumb">
               <ol className="breadcrumb mb-0">
@@ -160,7 +163,7 @@ const ComponentPreview: React.FC = () => {
 
       <section className="row mb-5 row-cols-1 row-cols-sm-2 row-cols-lg-3">
         <div className="col-12">
-          <h2 className="mb-3">Forms</h2>
+          <h4 className="h4 mb-4 fw-semibold">Forms</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <div style={{ maxWidth: '800px' }} className="mx-auto">
               <form>
@@ -213,7 +216,7 @@ const ComponentPreview: React.FC = () => {
 
       <section className="row mb-5">
         <div className="col-12">
-          <h2 className="mb-3">Progress</h2>
+          <h4 className="h4 mb-4 fw-semibold">Progress</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <div className="progress mb-3">
               <div className="progress-bar" role="progressbar" style={{ width: '25%' }} aria-valuenow={25} aria-valuemin={0} aria-valuemax={100}>25%</div>
@@ -230,7 +233,7 @@ const ComponentPreview: React.FC = () => {
 
       <section className="row mb-5">
         <div className="col-12">
-          <h2 className="mb-3">Spinners</h2>
+          <h4 className="h4 mb-4 fw-semibold">Spinners</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <div className="d-flex flex-wrap gap-3">
               <div className="spinner-border text-primary" role="status">
@@ -255,7 +258,7 @@ const ComponentPreview: React.FC = () => {
 
       <section className="row mb-5">
         <div className="col-12">
-          <h2 className="mb-3">Modal</h2>
+          <h4 className="h4 mb-4 fw-semibold">Modal</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <button type="button" className="btn btn-primary" onClick={() => setShowModal(true)}>
               Launch demo modal
@@ -286,15 +289,15 @@ const ComponentPreview: React.FC = () => {
 
       <section className="row mb-5">
         <div className="col-12">
-          <h2 className="mb-3">Accordion</h2>
+          <h4 className="h4 mb-4 fw-semibold">Accordion</h4>
           <div className="bg-white p-4 border rounded-4 shadow-sm">
             <div className="accordion" id="accordionExample">
               <div className="accordion-item">
-                <h2 className="accordion-header" id="headingOne">
+                <h4 className="accordion-header" id="headingOne">
                   <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                     Accordion Item #1
                   </button>
-                </h2>
+                </h4>
                 <div id="collapseOne" className="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                   <div className="accordion-body">
                     <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element.
@@ -302,11 +305,11 @@ const ComponentPreview: React.FC = () => {
                 </div>
               </div>
               <div className="accordion-item">
-                <h2 className="accordion-header" id="headingTwo">
+                <h4 className="accordion-header" id="headingTwo">
                   <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                     Accordion Item #2
                   </button>
-                </h2>
+                </h4>
                 <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                   <div className="accordion-body">
                     <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element.

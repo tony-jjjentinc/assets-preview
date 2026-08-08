@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 const PATTERN_CONFIG: Record<string, number> = {
-  'circuit-board.svg': 200,
+  'texture.svg': 15,
+  'texture2.svg': 25,
+  'circuit-board.svg': 350,
   'topography.svg': 670,
   'bubbles.svg': 100,
   'diagonal-lines.svg': 30,
   'diagonal-stripes.svg': 30,
   'hexagons.svg': 30,
-  'texture.svg': 15,
-  'texture2.svg': 25,
 };
 const PATTERNS = Object.keys(PATTERN_CONFIG);
 
@@ -30,7 +30,7 @@ const PatternPreview: React.FC = () => {
       fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
       boxSizing: 'border-box'
     }}>
-      <div 
+      <div
         className="position-absolute top-0 start-0 w-100 h-100 bg-primary"
         style={{
           zIndex: 0,
@@ -44,7 +44,7 @@ const PatternPreview: React.FC = () => {
         }}
       />
 
-      <div 
+      <div
         className="position-absolute top-0 start-0 w-100 h-100"
         style={{
           zIndex: 0,
@@ -53,38 +53,39 @@ const PatternPreview: React.FC = () => {
         }}
       />
 
-      <div className="position-relative" style={{ zIndex: 1, width: '100%', padding: '2rem' }}>
-        <div className="d-flex flex-row flex-wrap align-items-center justify-content-center gap-4 p-3 rounded shadow-lg border border-dark border-opacity-10 bg-white bg-opacity-75" style={{ backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
-          
-          <div className="d-flex align-items-center gap-2">
-            <label className="form-label small fw-medium mb-0 text-dark">Scale</label>
-            <input 
-              type="range" 
-              min="10" 
-              max="100" 
-              value={patternScale} 
-              onChange={(e) => setPatternScale(Number(e.target.value))} 
-              className="form-range"
-              style={{ width: '120px' }}
-            />
-            {/* <span className="small fw-bold text-dark ms-1" style={{ width: '4ch' }}>{patternScale}%</span> */}
-          </div>
+      <div className="position-relative col-12 col-md-8 col-xl-6" style={{ zIndex: 1, padding: '2rem' }}>
+        <div className="d-flex flex-column align-items-center justify-content-center p-3 rounded shadow-lg border border-dark border-opacity-10 bg-white bg-opacity-75" style={{ backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
+          <div className='d-flex gap-4 flex-wrap justify-content-center align-content-center'>
+            <div className="d-flex align-items-center gap-2">
+              <label className="form-label small fw-medium mb-0 text-dark">Scale</label>
+              <input
+                type="range"
+                min="10"
+                max="100"
+                value={patternScale}
+                onChange={(e) => setPatternScale(Number(e.target.value))}
+                className="form-range"
+                style={{ width: '120px' }}
+              />
+              {/* <span className="small fw-bold text-dark ms-1" style={{ width: '4ch' }}>{patternScale}%</span> */}
+            </div>
 
-          <div className="d-flex align-items-center gap-2">
-            <select 
-              value={selectedPattern} 
-              onChange={handlePatternChange}
-              className="form-select form-select-sm bg-transparent border-0 shadow-none fw-medium text-dark"
-              style={{ cursor: 'pointer' }}
-            >
-              {PATTERNS.map(pattern => (
-                <option key={pattern} value={pattern} className="text-dark">
-                  {pattern.replace('.svg', '').replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                </option>
-              ))}
-            </select>
+            <div className="d-flex align-items-center gap-2">
+              <select
+                value={selectedPattern}
+                onChange={handlePatternChange}
+                className="form-select form-select-sm bg-transparent shadow-none fw-medium text-dark"
+                style={{ cursor: 'pointer' }}
+              >
+                {PATTERNS.map(pattern => (
+                  <option key={pattern} value={pattern} className="text-dark">
+                    {pattern.replace('.svg', '').replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-
+          <p className='text-muted mt-3 mb-0 text-center'>Configure the scale and select pattern options</p>
         </div>
       </div>
     </div>

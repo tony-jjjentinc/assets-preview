@@ -46,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
   };
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) => 
-    `nav-link custom-nav-link d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start ${isActive ? 'active bg-jjjei-primary shadow-sm text-light fw-bold' : 'link-dark'}`;
+    `nav-link custom-nav-link d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start ${isActive ? 'active bg-primary-base shadow-sm text-light fw-bold' : 'link-dark'}`;
 
   return (
     <>
@@ -59,9 +59,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
         ></div>
       )}
       <div className={`d-flex flex-column flex-shrink-0 p-3 bg-light shadow-sm sidebar-container ${isMobileOpen ? 'open' : ''}`} style={{ width: '280px', height: '100vh' }}>
-        <div className="d-flex align-items-center justify-content-between justify-content-md-center w-100 px-2 mb-3">
+        <div className="d-flex align-items-center justify-content-between justify-content-md-center w-100 px-2 my-4">
           <a href="/assets-preview/" className="text-decoration-none">
-            <img src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/jjjei_stacked.svg" alt="Marymart Logo" className="d-none d-lg-block" style={{ height: '80px', maxWidth: '100%', objectFit: 'contain' }} />
+            <img src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/jjjei_stacked.svg" alt="Marymart Logo" className="d-none d-lg-block" style={{ height: '96px', maxWidth: '100%', objectFit: 'contain' }} />
             <img src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/logo.svg" alt="Marymart Logo Compact" className="d-none d-md-block d-lg-none" style={{ height: '40px', maxWidth: '100%', objectFit: 'contain' }} />
           </a>
           <button onClick={onClose} className="btn-close d-md-none mt-2" aria-label="Close"></button>
@@ -69,20 +69,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
         <ul className="nav nav-pills flex-column mb-auto gap-2">
           <li className="nav-item">
             <NavLink to="/" onClick={handleNavClick} className={navLinkClass} end>
-              <i className="bi bi-ui-checks me-3 me-md-0 me-lg-3 fs-5"></i>
-              <span className="d-inline d-md-none d-lg-inline">Components</span>
+              <i className="bi bi-house-door me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Home</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/colors" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-palette me-3 me-md-0 me-lg-3 fs-5"></i>
-              <span className="d-inline d-md-none d-lg-inline">Colors</span>
+              <span className="d-inline d-md-none d-lg-inline">Departmental Colors</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/status" onClick={handleNavClick} className={navLinkClass}>
-              <i className="bi bi-hand-thumbs-up-fill me-3 me-md-0 me-lg-3 fs-5"></i>
-              <span className="d-inline d-md-none d-lg-inline">Status Colors</span>
+              <i className="bi bi-palette me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">System Colors</span>
             </NavLink>
           </li>
           <li>
@@ -94,13 +94,25 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
           <li>
             <NavLink to="/typography" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-type me-3 me-md-0 me-lg-3 fs-5"></i>
-              <span className="d-inline d-md-none d-lg-inline">Typography</span>
+              <span className="d-inline d-md-none d-lg-inline">Font and Typography</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/icons" onClick={handleNavClick} className={navLinkClass}>
+              <i className="bi bi-hand-thumbs-up me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Icons</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/patterns" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-grid-3x3 me-3 me-md-0 me-lg-3 fs-5"></i>
               <span className="d-inline d-md-none d-lg-inline">Patterns</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/components" onClick={handleNavClick} className={navLinkClass}>
+              <i className="bi bi-ui-checks-grid me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Components</span>
             </NavLink>
           </li>
           <li>

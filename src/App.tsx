@@ -8,6 +8,8 @@ import ColorPreview from './pages/ColorPreview';
 import StatusPreview from './pages/StatusPreview';
 import TypographyPreview from './pages/TypographyPreview';
 import SetupInstructions from './pages/SetupInstructions';
+import IconPreview from './pages/IconPreview';
+import Home from './pages/Home';
 import { FloatingToolbar } from './components/FloatingToolbar';
 
 function App() {
@@ -16,10 +18,12 @@ function App() {
       <FloatingToolbar />
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<ComponentPreview />} />
+          <Route index element={<Home />} />
+          <Route path="components" element={<ComponentPreview />} />
           <Route path="colors" element={<ColorPreview />} />
           <Route path="status" element={<StatusPreview />} />
           <Route path="images" element={<ImagePreview />} />
+          <Route path="icons" element={<IconPreview />} />
           <Route path="patterns" element={<PatternPreview />} />
           <Route path="typography" element={<TypographyPreview />} />
           <Route path="setup" element={<SetupInstructions />} />

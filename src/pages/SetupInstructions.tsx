@@ -50,7 +50,7 @@ const SetupInstructions: React.FC = () => {
 
   const existingOverrideOnly = `<!-- JJJEI Assets Design System -->
 <!-- Example: loading the GMO theme base -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v1/jjjei_gmo:0.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v2/jjjei_gmo:0.css">
 `;
 
   const newProjectSnippet = `<!-- 1. Create a new index.html file -->
@@ -65,7 +65,7 @@ const SetupInstructions: React.FC = () => {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
   <!-- 3. Assets Design System (MUST be after Bootstrap) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v1/jjjei_gmo:0.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v2/jjjei_gmo:0.css">
 </head>
 <body>
   <h1>Hello, World!</h1>
@@ -79,19 +79,19 @@ const SetupInstructions: React.FC = () => {
   return (
     <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
       <div className="row justify-content-center">
-        <div className="col-12 col-xl-10">
+        <div className="col-12">
           
           <div className="mb-4 text-center">
             <h1 className="mb-3 fw-bold text-center">Setup and Usage</h1>
             
-            <div className='d-flex flex-column align-items-start justify-content-center mt-5'>
-              <h5 className="p text-muted mb-2">Setup instructions for:</h5>
+            <div className='d-flex flex-row gap-3 align-items-center justify-content-center justify-content-md-start flex-wrap mt-5'>
+              <h5 className="p text-muted mb-0">Setup instructions for:</h5>
               <div className="btn-group shadow-sm" role="group" aria-label="Setup variants">
                 <input type="radio" className="btn-check" name="setupVariant" id="existingProj" autoComplete="off" checked={activeTab === 'existing'} onChange={() => setActiveTab('existing')} />
-                <label className="btn btn-outline-primary px-4 py-2 fw-bold" htmlFor="existingProj">Existing Projects</label>
+                <label className="btn btn-outline-primary btn-sm px-4 py-2 fw-bold" htmlFor="existingProj">Existing Projects</label>
 
                 <input type="radio" className="btn-check" name="setupVariant" id="newProj" autoComplete="off" checked={activeTab === 'new'} onChange={() => setActiveTab('new')} />
-                <label className="btn btn-outline-primary px-4 py-2 fw-bold" htmlFor="newProj">New Projects</label>
+                <label className="btn btn-outline-primary btn-sm px-4 py-2 fw-bold" htmlFor="newProj">New Projects</label>
               </div>
             </div>
           </div>
@@ -134,7 +134,7 @@ const SetupInstructions: React.FC = () => {
           )}
 
           {/* Usage Section */}
-          <div className="mt-5 pt-4 border-top">
+          <div className="mt-5 pt-4">
             <h2 className="mb-4 fw-bold text-center">Basic Usage</h2>
 
             <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
@@ -192,7 +192,7 @@ const SetupInstructions: React.FC = () => {
 
             <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
               <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
-                <h3 className="fw-bold text-dark mb-0"><i className="bi bi-image me-3"></i>Images & Assets</h3>
+                <h3 className="fw-bold text-dark mb-0"><i className="bi bi-image me-3"></i>Images and Assets</h3>
               </div>
               <div className="card-body p-4 pt-2">
                 <p className="mb-4">
@@ -211,34 +211,28 @@ const SetupInstructions: React.FC = () => {
               </div>
               <div className="card-body p-4 pt-2">
                 <p className="mb-4">
-                  For project icons, we highly recommend using <strong>Bootstrap Icons</strong>, as it perfectly complements the Bootstrap 5 foundation. It includes thousands of high-quality, open-source icons.
+                  We recommend both <strong>Bootstrap Icons</strong> and <strong>FontAwesome</strong> for iconography. You can include either (or both) CDNs into your project <code>&lt;head&gt;</code> depending on your project needs.
                 </p>
-                <CodeSnippet code={`<!-- Add via CDN -->\n<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">\n\n<!-- Usage -->\n<i class="bi bi-heart-fill text-danger"></i>`} />
+                <CodeSnippet code={`<!-- 1. Bootstrap Icons CDN -->\n<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">\n\n<!-- 2. FontAwesome 6 CDN -->\n<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">`} />
                 <p className="mt-3 mb-0 text-muted small">
-                  See the <a href="https://icons.getbootstrap.com/" target="_blank" rel="noopener noreferrer">official Bootstrap Icons documentation</a> for the full icon search and guide.
+                  Explore and search all available icons on the <Link to="/icons">Icons Index page</Link>.
                 </p>
               </div>
             </div>
 
             <div className="card border-0 shadow-sm mb-5 rounded-4 overflow-hidden">
               <div className="card-header bg-white border-bottom-0 pt-4 pb-0 px-4">
-                <h3 className="fw-bold text-dark mb-0"><i className="bi bi-type me-3"></i>Fonts & Typography</h3>
+                <h3 className="fw-bold text-dark mb-0"><i className="bi bi-type me-3"></i>Fonts and Typography</h3>
               </div>
               <div className="card-body p-4 pt-2">
                 <p className="mb-4">
-                  Typography is automatically configured when you import the CSS CDN. We utilize <strong>Inter</strong> for clean, highly-readable UI text, and <strong>Outfit</strong> for bold, expressive headings.
+                  Typography is automatically configured when you import the CSS CDN. We utilize <strong>Inter</strong> as the primary typeface for clean, modern, and highly readable text across all UI elements and headings.
                 </p>
                 <div className="row g-4">
-                  <div className="col-12 col-md-6">
+                  <div className="col-12">
                     <div className="p-4 border rounded bg-light">
-                      <h4 className="fw-bold" style={{ fontFamily: 'Outfit, sans-serif' }}>Heading Font (Outfit)</h4>
-                      <p className="text-muted mb-0">Automatically applied to all <code>h1</code> through <code>h6</code> tags and <code>.display-*</code> classes.</p>
-                    </div>
-                  </div>
-                  <div className="col-12 col-md-6">
-                    <div className="p-4 border rounded bg-light">
-                      <h4 className="fw-normal" style={{ fontFamily: 'Inter, sans-serif' }}>Body Font (Inter)</h4>
-                      <p className="text-muted mb-0">Automatically applied to the <code>body</code> and all standard text elements like <code>p</code> and <code>span</code>.</p>
+                      <h4 className="fw-bold mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>Primary Font (Inter)</h4>
+                      <p className="text-muted mb-0">Automatically applied to the <code>body</code>, headings (<code>h1</code> - <code>h6</code>), buttons, and UI components.</p>
                     </div>
                   </div>
                 </div>

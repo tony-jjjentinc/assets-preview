@@ -17,7 +17,13 @@ const TypographyPreview: React.FC = () => {
         `}
       </style>
 
-      <h1 className="mb-5 fw-bold text-center">Typography Preview</h1>
+      <div className="row justify-content-center">
+        <div className="col-12">
+
+          <div className="mb-4 text-center">
+            <h1 className="mb-3 fw-bold">Font and Typography</h1>
+            <p className="text-muted fs-5 mb-4">Official typographic hierarchy, primary typefaces, and text styling standards.</p>
+          </div>
 
       <section className="row mb-5 row-cols-1 row-cols-xl-2 text-start">
         <div className="col">
@@ -48,11 +54,9 @@ const TypographyPreview: React.FC = () => {
             <p className="mb-0 fst-italic">This is an italic paragraph. The quick brown fox jumps over the lazy dog.</p>
           </div>
         </div>
-      </section>
-
-      <section className="row mb-5">
-        
-      </section>
+        </section>
+        </div>
+      </div>
     </div>
   );
 };
