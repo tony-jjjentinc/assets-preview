@@ -37,6 +37,7 @@ const modules = [
     link: '/icons',
     color: 'text-primary'
   },
+  /* Temporarily hidden Patterns preview
   {
     title: 'Patterns',
     description: 'Vector background mask patterns for UI sections.',
@@ -44,6 +45,7 @@ const modules = [
     link: '/patterns',
     color: 'text-primary'
   },
+  */
   {
     title: 'Components',
     description: 'Pre-styled Bootstrap 5 UI elements and interactive widgets.',
@@ -69,14 +71,14 @@ const Home: React.FC = () => {
           {/* Hero Section */}
           <div className="d-flex flex-column justify-content-center align-items-center" style={{height: '67vh'}}>
             <img 
-              src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/base.svg" 
+              src="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/images/logo/jjjei_stacked.svg" 
               alt="JJJEI Logo" 
-              style={{ maxHeight: '145px', objectFit: 'contain' }}
+              style={{ maxHeight: '156px', objectFit: 'contain' }}
               className="mb-4"
             />
-            <h1 className="display-5 fw-bold text-dark mb-3 text-center">JJJEI System Design Hub</h1>
-            <p className="lead text-muted mx-auto mb-4 text-center" style={{ maxWidth: '680px' }}>
-              The central source of truth for the standardized designs, color, and design guidelines of dashboards
+            <h1 className="display-5 fw-bold text-dark mb-3 text-center">Dashboard Design Hub</h1>
+            <p className="lead text-muted mx-auto mb-4 text-center">
+              The central source of truth for the standardized designs, color, and design guidelines of dashboards and projects
             </p>
             <div className="d-flex flex-wrap justify-content-center gap-3">
               <Link to="/components" className="btn btn-outline-secondary btn-lg rounded-pill px-4 bg-white shadow-sm">

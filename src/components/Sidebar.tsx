@@ -103,12 +103,14 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
               <span className="d-inline d-md-none d-lg-inline">Icons</span>
             </NavLink>
           </li>
+          {/* Temporarily hidden Patterns preview
           <li>
             <NavLink to="/patterns" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-grid-3x3 me-3 me-md-0 me-lg-3 fs-5"></i>
               <span className="d-inline d-md-none d-lg-inline">Patterns</span>
             </NavLink>
           </li>
+          */}
           <li>
             <NavLink to="/components" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-ui-checks-grid me-3 me-md-0 me-lg-3 fs-5"></i>
