@@ -25,7 +25,7 @@ const modules = [
   },
   {
     title: 'Font and Typography',
-    description: 'Primary Inter typeface and typographic hierarchy.',
+    description: 'Primary Inter typeface (from assets CDN repository) and typographic hierarchy.',
     icon: 'bi-type',
     link: '/typography',
     color: 'text-primary'

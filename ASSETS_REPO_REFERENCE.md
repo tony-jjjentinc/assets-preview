@@ -1,6 +1,6 @@
 # Assets Reference Guide
 
-The assets directory are served via Github Pages
+The assets directory are served via jsDelivr and Github Pages
 
 ## Base URL Configuration
 
@@ -17,12 +17,15 @@ To use these assets in your projects, it is highly recommended to use **jsDelivr
 ## 1. Styling Integration (CSS/Colors)
 
 ### Static Implementation
-Include the default Bootstrap 5 CSS CDN link in your web projects, followed by the CDN URL pointing to the pre-compiled group CSS. These custom files are lightweight and only override the Bootstrap 5 core theme colors and components.
+Include the default Bootstrap 5 CSS CDN link in your web projects, followed by the CDN URL pointing to the pre-compiled group CSS. You can use either the `latest` endpoint for auto-updating styles or a pinned version endpoint (e.g. `v3`).
 
 ```html
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- jsDelivr (Recommended) -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v2/admin.css">
+<!-- jsDelivr (Latest - Recommended) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/latest/jjjei_admin:0.css">
+
+<!-- jsDelivr (Version Pinned) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v3/jjjei_admin:0.css">
 ```
 
 ### Dynamic Implementation (Code.gs)
@@ -31,9 +34,10 @@ You can dynamically pass the appropriate group CSS URL to the frontend template,
 **Code.gs:**
 ```javascript
 function doGet(e) {
-  var group = e.parameter.group || 'admin';
+  var group = e.parameter.group || 'jjjei_admin:0';
   var template = HtmlService.createTemplateFromFile('Index');
-  template.cssUrl = 'https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v2/' + group + '.css';
+  // Use 'latest' to automatically inherit future theme updates
+  template.cssUrl = 'https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/latest/' + group + '.css';
   return template.evaluate();
 }
 ```
@@ -48,20 +52,39 @@ function doGet(e) {
 Beyond the standard Bootstrap 5 color classes (`primary`, `secondary`, `success`, etc.), these compiled CSS files include custom colors and utilities specifically built for this project:
 
 #### 1. The Base Background Utility
-- **`.bg-primary-base`**: A custom background utility designed for page backgrounds. While `.bg-primary-subtle` uses a subtle tint of the specific sub-group's color (e.g., `hr:hr_operations`), `.bg-primary-base` always uses a subtle tint of the **parent group's base color** (e.g., `hr`). This ensures a consistent, non-overwhelming background while the specific variant color is used for active UI elements. It automatically adapts to dark mode.
+- **`.bg-primary-base`**: A custom background utility designed for page backgrounds. While `.bg-primary-subtle` uses a 25% tint of the specific sub-group's variant color (e.g., `jjjei_hr:2`), `.bg-primary-base` always uses a strong 60% tint of the **parent group's base color** (e.g., `jjjei_hr:0`). This ensures a consistent anchor background for the department, while the specific variant color is used for active UI elements. It automatically adapts to dark mode.
 
-#### 2. Semantic Status Colors
-The project dynamically injects semantic status colors into the standard Bootstrap theming engine. This means you have access to the full suite of Bootstrap utility classes (like `.bg-*`, `.text-*`, `.border-*`, `.btn-*`, etc.) for all defined custom statuses. 
+#### 2. The Full-Page Gradient Utility
+- **`.bg-primary-gradient`**: A modern, responsive gradient utility designed to be applied to the `<body>` tag or main application wrapper. 
+  - **Responsive Angles:** It flows vertically (`180deg`) on mobile and cleanly snaps horizontally (`90deg`) on desktop (`>=768px`).
+  - **Colors:** It starts (top/left) with `$primary-bg-subtle` at 0% and fades into `$primary-bg-subtle` at 50% opacity (`rgba($primary-bg-subtle, 0.5)`) at 100%.
+  - **Fixed Canvas:** It is locked in place with `background-attachment: fixed !important` to ensure a consistent presentation layer regardless of page scroll.
+
+#### 3. Semantic Status Colors
+The project dynamically injects semantic status colors into the standard Bootstrap theming engine. This means you have access to the full suite of Bootstrap utility classes for all defined custom statuses, including their accessible subtle variants!
 
 Available status names are numeric keys from `0` to `9` (e.g., `status-0`, `status-1`, etc.).
+
+**Available Utilities:**
+- `.bg-status-#`, `.text-status-#`, `.border-status-#`
+- `.bg-status-#-subtle`, `.border-status-#-subtle` (Uses the exact same 25% tint logic!)
+- `.text-status-#-emphasis` (Automatically darkened to pass WCAG 4.5 contrast)
 
 **Example Usage:**
 ```html
 <div class="bg-primary-base p-3">
   <span class="badge bg-status-1 text-white">Urgent</span>
-  <div class="alert alert-status-3 mt-2">Awaiting review...</div>
+  <div class="alert bg-status-3-subtle text-status-3-emphasis border border-status-3-subtle mt-2">
+    Awaiting review...
+  </div>
 </div>
 ```
+
+### Included Bootstrap Components & Color Overrides
+These custom CSS files include primary color overrides for all high color-impact Bootstrap 5 components:
+- **Navigation & Layout:** `.nav`, `.nav-pills`, `.nav-tabs`, `.navbar`
+- **Interactive Controls:** `.btn`, `.btn-group`, `.dropdown` (`.dropdown-item.active`), `.accordion` (`.accordion-button`)
+- **Feedback & Content:** `.alert`, `.badge`, `.list-group`, `.progress`, `.spinners`, `.tables`, `.forms`, `.pagination`, `.breadcrumb`, `.carousel`
 
 ### Bootstrap JavaScript Bundle
 This repository only serves customized CSS. For interactive Bootstrap components (like Modals, Dropdowns, or Offcanvases), you must manually include the standard Bootstrap JS bundle in your web projects `Index.html`:
@@ -156,13 +179,13 @@ Apply the provided SVGs as background textures to containers using CSS.
 - `texture2.svg`
 - `topography.svg`
 
-### Colors (`/colors/v2/`)
-*(Note: CSS is now versioned and group variations use a colon `:` separator)*
+### Colors (`/colors/latest/` and `/colors/v3/`)
+*(Note: CSS is available under both `/colors/latest/` for auto-updating apps and `/colors/v3/` for version-pinned apps)*
 - `jjjei_admin:0.css` to `jjjei_admin:5.css`
 - `jjjei_controller:0.css` to `jjjei_controller:2.css`
 - `jjjei_facilities:0.css` to `jjjei_facilities:6.css`
 - `jjjei_gmo:0.css` to `jjjei_gmo:3.css`
 - `jjjei_hr:0.css` to `jjjei_hr:2.css`
 - `jjjei_leasing:0.css` to `jjjei_leasing:3.css`
-- `jjjei_procurement_and_inventory:0.css` to `jjjei_procurement_and_inventory:2.css`
+- `jjjei_procinv:0.css` to `jjjei_procinv:2.css`
 - `jjjei_treasury:0.css` to `jjjei_treasury:3.css`

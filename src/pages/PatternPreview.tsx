@@ -27,7 +27,7 @@ const PatternPreview: React.FC = () => {
 
   return (
     <div className="position-relative min-vh-100 d-flex flex-column align-items-center justify-content-center overflow-hidden w-100 bg-primary-subtle" style={{
-      fontFamily: "'Inter', 'Segoe UI', 'Roboto', sans-serif",
+      fontFamily: "'Inter', sans-serif",
       boxSizing: 'border-box'
     }}>
       <div

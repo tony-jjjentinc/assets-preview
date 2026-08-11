@@ -226,12 +226,12 @@ const SetupInstructions: React.FC = () => {
               </div>
               <div className="card-body p-4 pt-2">
                 <p className="mb-4">
-                  Typography is automatically configured when you import the CSS CDN. We utilize <strong>Inter</strong> as the primary typeface for clean, modern, and highly readable text across all UI elements and headings.
+                  Typography is automatically configured when you import the CSS CDN. We utilize <strong>Inter</strong> (loaded directly from the assets repository) as the primary typeface for clean, modern, and highly readable text across all UI elements and headings.
                 </p>
                 <div className="row g-4">
                   <div className="col-12">
                     <div className="p-4 border rounded bg-light">
-                      <h4 className="fw-bold mb-2" style={{ fontFamily: 'Inter, sans-serif' }}>Primary Font (Inter)</h4>
+                      <h4 className="fw-bold mb-2" style={{ fontFamily: "'Inter', sans-serif" }}>Primary Font (Inter)</h4>
                       <p className="text-muted mb-0">Automatically applied to the <code>body</code>, headings (<code>h1</code> - <code>h6</code>), buttons, and UI components.</p>
                     </div>
                   </div>
