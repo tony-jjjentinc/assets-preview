@@ -85,9 +85,9 @@ const Home: React.FC = () => {
               The central source of truth for the standardized designs, color, and design guidelines of dashboards and projects
             </p>
             <div className="d-flex flex-wrap justify-content-center gap-3">
-              <Link to="/components" className="btn btn-outline-secondary btn-lg rounded-pill px-4 bg-white shadow-sm">
+              {/* <Link to="/components" className="btn btn-outline-secondary btn-lg rounded-pill px-4 bg-white shadow-sm">
                 Design preview
-              </Link>
+              </Link> */}
               <Link to="/setup" className="btn btn-primary btn-lg rounded-pill px-4 shadow-sm">
                 Get Started <i className="bi bi-arrow-right me-1"></i>
               </Link>
