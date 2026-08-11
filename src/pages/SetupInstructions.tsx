@@ -226,7 +226,7 @@ const SetupInstructions: React.FC = () => {
               </div>
               <div className="card-body p-4 pt-2">
                 <p className="mb-4">
-                  Typography is automatically configured when you import the CSS CDN. We utilize <strong>Inter</strong> (loaded directly from the assets repository) as the primary typeface for clean, modern, and highly readable text across all UI elements and headings.
+                  Typography is automatically configured when you import the proper styling CSS from the assets repository. We utilize <strong>Inter</strong> as the primary typeface for clean, modern, and highly readable text across all UI elements and headings.
                 </p>
                 <CodeSnippet code={`<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">`} />
                 <div className="row g-4">

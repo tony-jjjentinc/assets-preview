@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 interface SwatchCardProps {
   name: string;
+  description?: string;
   hex: string;
   isSubtle?: boolean;
 }
@@ -21,7 +22,7 @@ const getSubtleHex = (hex: string): string => {
   return `#${sr}${sg}${sb}`.toUpperCase();
 };
 
-const SwatchCard: React.FC<SwatchCardProps> = ({ name, hex, isSubtle = false }) => {
+const SwatchCard: React.FC<SwatchCardProps> = ({ name, description = "", hex, isSubtle = false }) => {
   const displayHex = isSubtle ? getSubtleHex(hex) : hex;
   const [hover, setHover] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -53,8 +54,8 @@ const SwatchCard: React.FC<SwatchCardProps> = ({ name, hex, isSubtle = false }) 
         onMouseLeave={() => setHover(false)}
       >
         <div
-          className="d-flex align-items-end p-3"
-          style={{ height: '140px', backgroundColor: displayHex, transition: 'background-color 0.3s ease', cursor: 'pointer' }}
+          className="d-flex align-items-start justify-content-end p-3"
+          style={{ height: '150px', backgroundColor: displayHex, transition: 'background-color 0.3s ease', cursor: 'pointer' }}
           onClick={() => copyHex(displayHex)}
         >
           <span className="badge bg-white text-dark rounded-pill shadow-sm" style={{ fontSize: '0.75rem', opacity: hover ? 1 : 0.8 }}>
@@ -62,6 +63,7 @@ const SwatchCard: React.FC<SwatchCardProps> = ({ name, hex, isSubtle = false }) 
           </span>
         </div>
         <div className="card-body p-3">
+          <p className="small mb-0 text-muted" style={{fontSize: "0.67rem"}}>{description}</p>
           <h6 className="card-title mb-0 fw-bold">{name}</h6>
         </div>
       </div>

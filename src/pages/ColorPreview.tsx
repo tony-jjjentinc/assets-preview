@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { colorGroups } from '../config/colorMapping';
+import SwatchCard from '../components/SwatchCard';
 
 const ColorPreview: React.FC = () => {
 
@@ -8,74 +9,6 @@ const ColorPreview: React.FC = () => {
   const [groupHexValues, setGroupHexValues] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [subtleGroups, setSubtleGroups] = useState<Record<string, boolean>>({});
-
-
-
-  const getSubtleHex = (hex: string): string => {
-    let cleanHex = hex.replace('#', '');
-    if (cleanHex.length === 3) {
-      cleanHex = cleanHex.split('').map(c => c + c).join('');
-    }
-    const r = parseInt(cleanHex.substring(0, 2), 16);
-    const g = parseInt(cleanHex.substring(2, 4), 16);
-    const b = parseInt(cleanHex.substring(4, 6), 16);
-    // Updated to 25% base color and 75% white for a softer look.
-    const mix = (c: number) => Math.round(c * 0.25 + 255 * 0.75);
-    const sr = mix(r).toString(16).padStart(2, '0');
-    const sg = mix(g).toString(16).padStart(2, '0');
-    const sb = mix(b).toString(16).padStart(2, '0');
-    return `#${sr}${sg}${sb}`.toUpperCase();
-  };
-
-  // Swatch card component with header and hover overlay
-  interface SwatchCardProps {
-    name: string;
-    hex: string;
-    isSubtle: boolean;
-  }
-
-  const SwatchCard: React.FC<SwatchCardProps> = ({ name, hex, isSubtle }) => {
-    const displayHex = isSubtle ? getSubtleHex(hex) : hex;
-    const [hover, setHover] = useState(false);
-    const [copied, setCopied] = useState(false);
-    const copyHex = (hex: string) => {
-      if (navigator && navigator.clipboard) {
-        navigator.clipboard.writeText(hex)
-          .then(() => {
-            setCopied(true);
-            setTimeout(() => setCopied(false), 1500);
-          })
-          .catch(() => { });
-      }
-    };
-    return (
-      <div className="col">
-        <div
-          className="card h-100 border-0"
-          style={{
-            transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-            transform: hover ? 'scale(1.02)' : 'scale(1)',
-            boxShadow: hover ? '0 10px 20px rgba(0,0,0,0.15)' : '0 2px 4px rgba(0,0,0,0.2)',
-            borderRadius: '1rem',
-            overflow: 'hidden',
-            cursor: 'pointer',
-          }}
-          onMouseEnter={() => setHover(true)}
-          onMouseLeave={() => setHover(false)}
-          onClick={() => copyHex(displayHex)}
-        >
-          <div className="d-flex align-items-end p-3" style={{ height: '140px', backgroundColor: displayHex, transition: 'background-color 0.3s ease', cursor: 'pointer' }}>
-            <span className="badge bg-white text-dark rounded-pill shadow-sm" style={{ fontSize: '0.75rem', opacity: hover ? 1 : 0.8 }}>
-              {copied ? 'Copied!' : displayHex}
-            </span>
-          </div>
-          <div className="card-body p-3">
-            <h6 className="card-title mb-0 fw-bold">{name}</h6>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   const toggleSubtle = (groupName: string) => {
     setSubtleGroups(prev => ({ ...prev, [groupName]: !prev[groupName] }));
@@ -109,8 +42,8 @@ const ColorPreview: React.FC = () => {
     );
   }
 
-  const renderSwatch = (name: string, hex: string, isSubtle = false) => {
-    return <SwatchCard key={name} name={name} hex={hex} isSubtle={!!isSubtle} />;
+  const renderSwatch = (name: string, description: string, hex: string, isSubtle = false) => {
+    return <SwatchCard key={name} description={description} name={name} hex={hex} isSubtle={!!isSubtle} />;
   };
 
 
@@ -149,7 +82,7 @@ const ColorPreview: React.FC = () => {
                     {Object.entries(variants).map(([variantName, cssFilename]) => {
                       const rawKey = cssFilename.replace('.css', '');
                       const hex = groupHexValues[rawKey] || '#E0E0E0';
-                      return renderSwatch(variantName, hex, !!subtleGroups[groupName]);
+                      return renderSwatch(variantName, groupName ,hex, !!subtleGroups[groupName]);
                     })}
                   </div>
                 </div>
