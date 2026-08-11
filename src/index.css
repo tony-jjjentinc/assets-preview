@@ -1,9 +1,4 @@
-@font-face {
-  font-family: 'Inter';
-  src: url('https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/fonts/Inter.woff2') format('woff2');
-  font-weight: 100 900;
-  font-style: normal;
-}
+/* Inter font is now loaded via Google Fonts CDN */
 
 html, body, #root {
   height: 100vh;
@@ -11,9 +6,5 @@ html, body, #root {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  font-family: 'Inter', sans-serif !important;
-}
-
-body, button, input, select, textarea {
   font-family: 'Inter', sans-serif !important;
 }

@@ -50,7 +50,7 @@ const SetupInstructions: React.FC = () => {
 
   const existingOverrideOnly = `<!-- JJJEI Assets Design System -->
 <!-- Example: loading the GMO theme base -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v2/jjjei_gmo:0.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v3/jjjei_gmo:0.css">
 `;
 
   const newProjectSnippet = `<!-- 1. Create a new index.html file -->
@@ -65,7 +65,7 @@ const SetupInstructions: React.FC = () => {
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 
   <!-- 3. Assets Design System (MUST be after Bootstrap) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v2/jjjei_gmo:0.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/tony-jjjentinc/assets@main/colors/v3/jjjei_gmo:0.css">
 </head>
 <body>
   <h1>Hello, World!</h1>
@@ -228,6 +228,7 @@ const SetupInstructions: React.FC = () => {
                 <p className="mb-4">
                   Typography is automatically configured when you import the CSS CDN. We utilize <strong>Inter</strong> (loaded directly from the assets repository) as the primary typeface for clean, modern, and highly readable text across all UI elements and headings.
                 </p>
+                <CodeSnippet code={`<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">`} />
                 <div className="row g-4">
                   <div className="col-12">
                     <div className="p-4 border rounded bg-light">

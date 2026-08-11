@@ -10,12 +10,12 @@ import TypographyPreview from './pages/TypographyPreview';
 import SetupInstructions from './pages/SetupInstructions';
 import IconPreview from './pages/IconPreview';
 import Home from './pages/Home';
-import { FloatingToolbar } from './components/FloatingToolbar';
+// import { FloatingToolbar } from './components/FloatingToolbar';
 
 function App() {
   return (
     <HashRouter>
-      <FloatingToolbar />
+      {/* <FloatingToolbar /> */}
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />

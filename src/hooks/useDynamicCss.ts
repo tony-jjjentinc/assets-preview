@@ -25,7 +25,7 @@ export const useDynamicCss = (defaultGroup: string = 'jjjei_gmo:0') => {
     }
     
     // Fetch directly from GitHub raw to bypass all CDN edge caches
-    fetch(`https://raw.githubusercontent.com/tony-jjjentinc/assets/main/colors/v2/${group}.css?t=${Date.now()}`)
+    fetch(`https://raw.githubusercontent.com/tony-jjjentinc/assets/main/colors/v3/${group}.css?t=${Date.now()}`)
       .then(res => res.text())
       .then(css => {
         const modifiedCss = css.replace(

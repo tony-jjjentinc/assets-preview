@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { formatName } from '../utils/formatName';
+
 import { colorGroups } from '../config/colorMapping';
 
 const ColorPreview: React.FC = () => {
+
+
   const [groupHexValues, setGroupHexValues] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(true);
   const [subtleGroups, setSubtleGroups] = useState<Record<string, boolean>>({});
 
-  const [copiedHex, setCopiedHex] = useState<string | null>(null);
+
 
   const getSubtleHex = (hex: string): string => {
     let cleanHex = hex.replace('#', '');
@@ -25,18 +27,58 @@ const ColorPreview: React.FC = () => {
     return `#${sr}${sg}${sb}`.toUpperCase();
   };
 
-  const toggleSubtle = (groupName: string) => {
-    setSubtleGroups(prev => ({ ...prev, [groupName]: !prev[groupName] }));
+  // Swatch card component with header and hover overlay
+  interface SwatchCardProps {
+    name: string;
+    hex: string;
+    isSubtle: boolean;
+  }
+
+  const SwatchCard: React.FC<SwatchCardProps> = ({ name, hex, isSubtle }) => {
+    const displayHex = isSubtle ? getSubtleHex(hex) : hex;
+    const [hover, setHover] = useState(false);
+    const [copied, setCopied] = useState(false);
+    const copyHex = (hex: string) => {
+      if (navigator && navigator.clipboard) {
+        navigator.clipboard.writeText(hex)
+          .then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 1500);
+          })
+          .catch(() => { });
+      }
+    };
+    return (
+      <div className="col">
+        <div
+          className="card h-100 border-0"
+          style={{
+            transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+            transform: hover ? 'scale(1.02)' : 'scale(1)',
+            boxShadow: hover ? '0 10px 20px rgba(0,0,0,0.15)' : '0 2px 4px rgba(0,0,0,0.2)',
+            borderRadius: '1rem',
+            overflow: 'hidden',
+            cursor: 'pointer',
+          }}
+          onMouseEnter={() => setHover(true)}
+          onMouseLeave={() => setHover(false)}
+          onClick={() => copyHex(displayHex)}
+        >
+          <div className="d-flex align-items-end p-3" style={{ height: '140px', backgroundColor: displayHex, transition: 'background-color 0.3s ease', cursor: 'pointer' }}>
+            <span className="badge bg-white text-dark rounded-pill shadow-sm" style={{ fontSize: '0.75rem', opacity: hover ? 1 : 0.8 }}>
+              {copied ? 'Copied!' : displayHex}
+            </span>
+          </div>
+          <div className="card-body p-3">
+            <h6 className="card-title mb-0 fw-bold">{name}</h6>
+          </div>
+        </div>
+      </div>
+    );
   };
 
-  const handleCopy = async (hex: string) => {
-    try {
-      await navigator.clipboard.writeText(hex);
-      setCopiedHex(hex);
-      setTimeout(() => setCopiedHex(null), 4000);
-    } catch (err) {
-      console.error('Failed to copy text: ', err);
-    }
+  const toggleSubtle = (groupName: string) => {
+    setSubtleGroups(prev => ({ ...prev, [groupName]: !prev[groupName] }));
   };
 
   useEffect(() => {
@@ -46,7 +88,7 @@ const ColorPreview: React.FC = () => {
         const cacheBuster = Date.now();
         const gRes = await fetch(`https://raw.githubusercontent.com/tony-jjjentinc/assets/main/config/groupColors.json?t=${cacheBuster}`);
         const gData = await gRes.json();
-        
+
         setGroupHexValues(gData);
       } catch (err) {
         console.error(err);
@@ -67,39 +109,10 @@ const ColorPreview: React.FC = () => {
     );
   }
 
-  const renderSwatch = (name: string, hex: string, formatter: (n: string) => string = formatName, isSubtle = false) => {
-    const displayHex = isSubtle ? getSubtleHex(hex) : hex;
-    const isCopied = copiedHex === displayHex;
-    
-    return (
-      <div key={name} className="col">
-        <div 
-          className="d-flex flex-column align-items-center h-100"
-          style={{ cursor: 'pointer', transition: 'transform 0.2s ease' }}
-          onClick={() => handleCopy(displayHex)}
-          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-          title="Click to copy hex value"
-        >
-          <div 
-            style={{ width: '100%', height: '67px', backgroundColor: displayHex, borderRadius: '4px', boxShadow: '0 8px 16px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.05)' }}
-            className="mb-3"
-          ></div>
-          <span className="fw-bold text-center w-100 text-capitalize" style={{ fontSize: '0.9rem' }}>{formatter(name)}</span>
-          <span 
-            className={`small ${isCopied ? 'text-success fw-bold' : 'text-muted'}`} 
-            style={{ fontSize: '0.8rem', fontFamily: 'monospace', transition: 'color 0.2s ease' }}
-          >
-            {isCopied ? (
-              <><i className="bi bi-check2 me-1"></i>Copied!</>
-            ) : (
-              displayHex
-            )}
-          </span>
-        </div>
-      </div>
-    );
+  const renderSwatch = (name: string, hex: string, isSubtle = false) => {
+    return <SwatchCard key={name} name={name} hex={hex} isSubtle={!!isSubtle} />;
   };
+
 
   return (
     <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle">
@@ -114,29 +127,31 @@ const ColorPreview: React.FC = () => {
           {Object.entries(colorGroups).map(([groupName, variants]) => (
             <section key={groupName} className="row mb-5">
               <div className="col-12">
-                <div className="d-flex justify-content-between align-items-center mb-4">
-                  <h4 className="mb-0 fw-semibold">{groupName} Department</h4>
-                  <div className="form-check form-switch fs-5">
-                    <label className="form-check-label fs-6 text-muted ms-2" htmlFor={`switch-${groupName}`} style={{ cursor: 'pointer' }}>
-                      Background
-                    </label>
-                    <input 
-                      className="form-check-input" 
-                      type="checkbox"
-                      role="switch" 
-                      id={`switch-${groupName}`}
-                      checked={!!subtleGroups[groupName]}
-                      onChange={() => toggleSubtle(groupName)}
-                      style={{ cursor: 'pointer' }}
-                    />
+                <div className="p-4 rounded-3 shadow bg-light">
+                  <div className="mb-0 d-flex justify-content-between align-items-center">
+                    <h4 className="h4 fw-bold mb-0 fw-semibold">{groupName} Department</h4>
+                    <div className=" form-check-reverse form-switch fs-5">
+                      <label className="form-check-label small text-muted ms-2" htmlFor={`switch-${groupName}`} style={{ cursor: 'pointer' }}>
+                        Background
+                      </label>
+                      <input
+                        className="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id={`switch-${groupName}`}
+                        checked={!!subtleGroups[groupName]}
+                        onChange={() => toggleSubtle(groupName)}
+                        style={{ cursor: 'pointer' }}
+                      />
+                    </div>
                   </div>
-                </div>
-                <div className="bg-white p-4 border rounded-4 shadow-sm row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 m-0">
-                  {Object.entries(variants).map(([variantName, cssFilename]) => {
-                    const rawKey = cssFilename.replace('.css', '');
-                    const hex = groupHexValues[rawKey] || '#E0E0E0';
-                    return renderSwatch(variantName, hex, (name) => name, !!subtleGroups[groupName]);
-                  })}
+                  <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 m-0 pb-3">
+                    {Object.entries(variants).map(([variantName, cssFilename]) => {
+                      const rawKey = cssFilename.replace('.css', '');
+                      const hex = groupHexValues[rawKey] || '#E0E0E0';
+                      return renderSwatch(variantName, hex, !!subtleGroups[groupName]);
+                    })}
+                  </div>
                 </div>
               </div>
             </section>

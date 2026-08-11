@@ -4,35 +4,35 @@ import { Link } from 'react-router-dom';
 const modules = [
   {
     title: 'Departmental Colors',
-    description: 'Corporate brand palettes and department background variants.',
+    description: 'Color preview assigned for the departments and sub-departments',
     icon: 'bi-palette-fill',
     link: '/colors',
     color: 'text-primary'
   },
   {
     title: 'System and Status Colors',
-    description: 'Functional system utility colors and status level indicators (0-9).',
+    description: 'Functional system utility colors and status level indicators',
     icon: 'bi-palette-fill',
     link: '/status',
     color: 'text-primary'
   },
   {
     title: 'Image Assets',
-    description: 'Official vector SVG and raster PNG brand logos.',
+    description: 'Images assets, including variants and colors of the JJJEI and Marymart logo',
     icon: 'bi-images',
     link: '/images',
     color: 'text-primary'
   },
   {
     title: 'Font and Typography',
-    description: 'Primary Inter typeface (from assets CDN repository) and typographic hierarchy.',
+    description: 'Primary typeface and typographic preview for the standard font (Inter)',
     icon: 'bi-type',
     link: '/typography',
     color: 'text-primary'
   },
   {
     title: 'Icons Index',
-    description: 'Searchable library of Bootstrap Icons and FontAwesome.',
+    description: 'Searchable library of icons from Bootstrap and FontAwesome',
     icon: 'bi-hand-thumbs-up-fill',
     link: '/icons',
     color: 'text-primary'
@@ -46,17 +46,21 @@ const modules = [
     color: 'text-primary'
   },
   */
-  {
-    title: 'Components',
-    description: 'Pre-styled Bootstrap 5 UI elements and interactive widgets.',
-    icon: 'bi-ui-checks-grid',
-    link: '/components',
-    color: 'text-primary'
-  },
+
+  
+  // {
+  //   title: 'Components',
+  //   description: 'Pre-styled Bootstrap 5 UI elements and interactive widgets.',
+  //   icon: 'bi-ui-checks-grid',
+  //   link: '/components',
+  //   color: 'text-primary'
+  // },
+
+
   {
     title: 'Setup and Usage',
     description: 'Integration guide for existing and new projects.',
-    icon: 'bi-gear-wide-connected',
+    icon: 'bi-gear',
     link: '/setup',
     color: 'text-primary'
   }
@@ -91,7 +95,7 @@ const Home: React.FC = () => {
           </div>
 
           {/* Feature Modules Grid */}
-          <div className="row g-4">
+          <div className="row g-4 mb-5">
             {modules.map((mod) => (
               <div key={mod.title} className="col-12 col-md-6 col-lg-4">
                 <Link to={mod.link} className="text-decoration-none">

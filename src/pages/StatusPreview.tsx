@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { statusColors } from '../config/statusConfig';
+import SwatchCard from '../components/SwatchCard';
 import { systemColorMapping } from '../config/colorMapping';
 
 const getSubtleHex = (hex: string): string => {
@@ -173,36 +174,9 @@ const StatusPreview: React.FC = () => {
                   hex = styleVal ? styleVal.toUpperCase() : '#008000';
                 }
                 if (!hex) return null;
-                const isCopied = copiedText === hex;
+                
 
-                return (
-                  <div key={key} className="col">
-                    <div 
-                      className="d-flex flex-column align-items-center h-100"
-                      style={{ cursor: 'pointer', transition: 'transform 0.2s ease' }}
-                      onClick={() => handleCopy(hex)}
-                      onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                      onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                      title="Click to copy hex value"
-                    >
-                      <div 
-                        style={{ width: '100%', height: '67px', backgroundColor: hex, borderRadius: '4px', boxShadow: '0 8px 16px rgba(0,0,0,0.08)', border: '1px solid rgba(0,0,0,0.05)' }}
-                        className="mb-3"
-                      ></div>
-                      <span className="fw-bold text-center w-100 text-capitalize" style={{ fontSize: '0.9rem' }}>{displayName}</span>
-                      <span 
-                        className={`small ${isCopied ? 'text-success fw-bold' : 'text-muted'}`} 
-                        style={{ fontSize: '0.8rem', fontFamily: 'monospace', transition: 'color 0.2s ease' }}
-                      >
-                        {isCopied ? (
-                          <><i className="bi bi-check2 me-1"></i>Copied!</>
-                        ) : (
-                          hex
-                        )}
-                      </span>
-                    </div>
-                  </div>
-                );
+                return <SwatchCard key={key} name={displayName} hex={hex} />
               })}
             </div>
           </section>

@@ -125,7 +125,7 @@ const IconCard = ({ iconName, className, snippet, library, style = 'solid' }: Ic
       }}
     >
       <div className="card-body p-2 d-flex flex-column align-items-center justify-content-center">
-        <i className={`${className} fs-2 mb-3 ${copiedCode || copiedImage ? 'text-success' : 'text-primary'}`}></i>
+        <i className={`${className} fs-2 mb-3 ${copiedCode || copiedImage ? 'text-success' : 'text-dark'}`}></i>
         
         <div className="w-100 d-flex align-items-center justify-content-center" style={{ height: '30px' }}>
           {isHovered ? (

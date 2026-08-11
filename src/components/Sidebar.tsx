@@ -46,7 +46,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
   };
 
   const navLinkClass = ({ isActive }: { isActive: boolean }) => 
-    `nav-link custom-nav-link d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start ${isActive ? 'active bg-primary-base shadow-sm text-light fw-bold' : 'link-dark'}`;
+    `nav-link custom-nav-link d-flex align-items-center justify-content-start justify-content-md-center justify-content-lg-start ${isActive ? 'active bg-jjjei-primary shadow-sm text-light fw-bold' : 'link-dark'}`;
 
   return (
     <>
@@ -92,15 +92,15 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/typography" onClick={handleNavClick} className={navLinkClass}>
-              <i className="bi bi-type me-3 me-md-0 me-lg-3 fs-5"></i>
-              <span className="d-inline d-md-none d-lg-inline">Font and Typography</span>
-            </NavLink>
-          </li>
-          <li>
             <NavLink to="/icons" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-hand-thumbs-up me-3 me-md-0 me-lg-3 fs-5"></i>
               <span className="d-inline d-md-none d-lg-inline">Icons</span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/typography" onClick={handleNavClick} className={navLinkClass}>
+              <i className="bi bi-type me-3 me-md-0 me-lg-3 fs-5"></i>
+              <span className="d-inline d-md-none d-lg-inline">Font and Typography</span>
             </NavLink>
           </li>
           {/* Temporarily hidden Patterns preview
@@ -111,12 +111,12 @@ const Sidebar: React.FC<SidebarProps> = ({ isMobileOpen, onClose }) => {
             </NavLink>
           </li>
           */}
-          <li>
+          {/* <li>
             <NavLink to="/components" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-ui-checks-grid me-3 me-md-0 me-lg-3 fs-5"></i>
               <span className="d-inline d-md-none d-lg-inline">Components</span>
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <NavLink to="/setup" onClick={handleNavClick} className={navLinkClass}>
               <i className="bi bi-gear me-3 me-md-0 me-lg-3 fs-5"></i>
