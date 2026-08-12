@@ -88,7 +88,7 @@ const Home: React.FC = () => {
               {/* <Link to="/components" className="btn btn-outline-secondary btn-lg rounded-pill px-4 bg-white shadow-sm">
                 Design preview
               </Link> */}
-              <Link to="/setup" className="btn btn-primary btn-lg rounded-pill px-4 shadow-sm">
+              <Link to="/colors" className="btn btn-primary btn-lg rounded-pill px-4 shadow-sm">
                 Get Started <i className="bi bi-arrow-right me-1"></i>
               </Link>
             </div>
