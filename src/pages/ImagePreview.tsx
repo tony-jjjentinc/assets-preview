@@ -10,6 +10,7 @@ const logos = [
   'jjjei_horizontal-dark.png',
   'jjjei_horizontal-light.png',
   'jjjei_horizontal.png',
+  'jjjei_horizontal-50yrs.png',
   // 'jjjei_horizontal.svg',
   'jjjei_stacked-dark.png',
   'jjjei_stacked-fit-dark.png',
