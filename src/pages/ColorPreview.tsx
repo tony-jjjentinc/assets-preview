@@ -54,7 +54,7 @@ const ColorPreview: React.FC = () => {
 
           <div className="mb-4 text-center">
             <h1 className="mb-3 fw-bold">Departmental Colors</h1>
-            <p className="text-muted fs-5 mb-4">Explore corporate department color palettes and background variants.</p>
+            <p className="text-muted fs-5 mb-4">Explore departmental color shades and variants.</p>
           </div>
 
           {Object.entries(colorGroups).map(([groupName, variants]) => (

@@ -83,6 +83,7 @@ const SetupInstructions: React.FC = () => {
           
           <div className="mb-4 text-center">
             <h1 className="mb-3 fw-bold text-center">Setup and Usage</h1>
+            <p className="text-muted fs-5 mb-4">Developer's guide on integrating the Assets Design System into their projects</p>
             
             <div className='d-flex flex-row gap-3 align-items-center justify-content-center justify-content-md-start flex-wrap mt-5'>
               <h5 className="p text-muted mb-0">Setup instructions for:</h5>

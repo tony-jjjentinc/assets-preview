@@ -46,7 +46,7 @@ const SwatchCard: React.FC<SwatchCardProps> = ({ name, description = "", hex, is
         style={{
           transition: 'transform 0.2s ease, box-shadow 0.2s ease',
           transform: hover ? 'scale(1.02)' : 'scale(1)',
-          boxShadow: hover ? '0 10px 20px rgba(0,0,0,0.15)' : '0 2px 4px rgba(0,0,0,0.05)',
+          boxShadow: hover ? '0 10px 20px rgba(0,0,0,0.15)' : '0 2px 4px rgba(0,0,0,0.09)',
           borderRadius: '1rem',
           overflow: 'hidden',
         }}

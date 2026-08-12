@@ -4,7 +4,7 @@ const TypographyPreview: React.FC = () => {
   return (
     <div className="container-fluid min-vh-100 py-5 p-4 p-md-5 bg-primary-subtle" style={{ fontFamily: "'Inter', sans-serif" }}>
       <div className="row justify-content-center">
-        <div className="col-12 col-xl-10">
+        <div className="col-12">
 
           <div className="mb-4 text-center">
             <h1 className="mb-3 fw-bold">Font and Typography</h1>

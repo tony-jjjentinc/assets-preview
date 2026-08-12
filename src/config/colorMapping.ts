@@ -14,7 +14,7 @@ export const colorGroups: Record<string, Record<string, string>> = {
     "Compliance": "jjjei_admin:2.css",
     "Information Technology (IT)": "jjjei_admin:3.css",
     "Legal": "jjjei_admin:4.css",
-    "Operations Management (OP)": "jjjei_admin:5.css",
+    "Office Management (OM)": "jjjei_admin:5.css",
   },
   "GMO": {
     "Base Color": "jjjei_gmo:0.css",
@@ -38,7 +38,7 @@ export const colorGroups: Record<string, Record<string, string>> = {
     "Base Color": "jjjei_treasury:0.css",
     "Billing": "jjjei_treasury:1.css",
     "Collection": "jjjei_treasury:2.css",
-    "Disbursment": "jjjei_treasury:3.css",
+    "Disbursement": "jjjei_treasury:3.css",
   },
   "HR": {
     "Base Color": "jjjei_hr:0.css",
@@ -53,6 +53,8 @@ export const colorGroups: Record<string, Record<string, string>> = {
 };
 
 export const systemColorMapping: Record<string, string> = {
+  "jjjei-primary": "JJJEI Primary",
+  "jjjei-secondary": "JJJEI Secondary",
   "success": "Success",
   "warning": "Warning",
   "danger": "Danger",
@@ -60,6 +62,4 @@ export const systemColorMapping: Record<string, string> = {
   "info": "Info",
   "light": "Light",
   "dark": "Dark",
-  "jjjei-primary": "JJJEI Primary",
-  "jjjei-secondary": "JJJEI Secondary"
 };
