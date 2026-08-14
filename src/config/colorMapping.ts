@@ -2,11 +2,11 @@ export const colorGroups: Record<string, Record<string, string>> = {
   "Facilities": {
     "Base Color": "jjjei_facilities:0.css",
     "Architectural, Civil, and Structural (ACS)": "jjjei_facilities:1.css",
+    "Design and Drafting": "jjjei_facilities:6.css",
     "Electrical and Electronics (EE)": "jjjei_facilities:2.css",
     "Mechanical": "jjjei_facilities:3.css",
-    "Project (PJT)": "jjjei_facilities:4.css",
     "Plumbing": "jjjei_facilities:5.css",
-    "Design and Drafting": "jjjei_facilities:6.css",
+    "Project (PJT)": "jjjei_facilities:4.css",
   },
   "Admin": {
     "Base Color": "jjjei_admin:0.css",
@@ -42,24 +42,23 @@ export const colorGroups: Record<string, Record<string, string>> = {
   },
   "HR": {
     "Base Color": "jjjei_hr:0.css",
-    "HR Operations": "jjjei_hr:1.css",
+    "Operations": "jjjei_hr:1.css",
     "Payroll and Benefits": "jjjei_hr:2.css",
   },
   "Procurement and Inventory": {
     "Base Color": "jjjei_procinv:0.css",
-    "Procurement": "jjjei_procinv:1.css",
     "Inventory and Warehousing": "jjjei_procinv:2.css",
+    "Procurement": "jjjei_procinv:1.css",
   },
 };
 
 export const systemColorMapping: Record<string, string> = {
   "jjjei-primary": "JJJEI Primary",
-  "jjjei-secondary": "JJJEI Secondary",
+  "secondary": "Secondary",
+  "light": "Light",
+  "dark": "Dark",
   "success": "Success",
   "warning": "Warning",
   "danger": "Danger",
-  "secondary": "Secondary",
   "info": "Info",
-  "light": "Light",
-  "dark": "Dark",
 };
