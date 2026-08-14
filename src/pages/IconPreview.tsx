@@ -28,7 +28,15 @@ const IconCard = ({ iconName, className, snippet, library, style = 'solid' }: Ic
   const [isHovered, setIsHovered] = useState(false);
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedImage, setCopiedImage] = useState(false);
+  const [copiedName, setCopiedName] = useState(false);
   const [downloading, setDownloading] = useState(false);
+
+  const handleCopyName = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigator.clipboard.writeText(iconName);
+    setCopiedName(true);
+    setTimeout(() => setCopiedName(false), 2000);
+  };
 
   const handleCopyCode = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -112,7 +120,8 @@ const IconCard = ({ iconName, className, snippet, library, style = 'solid' }: Ic
   return (
     <div 
       className="card border-0 shadow-sm text-center p-3 h-100 bg-white" 
-      style={{ transition: 'transform 0.2s, box-shadow 0.2s' }}
+      style={{ transition: 'transform 0.2s, box-shadow 0.2s', cursor: 'pointer' }}
+      onClick={handleCopyName}
       onMouseEnter={(e) => {
         setIsHovered(true);
         e.currentTarget.style.transform = 'translateY(-2px)';
@@ -125,17 +134,26 @@ const IconCard = ({ iconName, className, snippet, library, style = 'solid' }: Ic
       }}
     >
       <div className="card-body p-2 d-flex flex-column align-items-center justify-content-center">
-        <i className={`${className} fs-2 mb-3 ${copiedCode || copiedImage ? 'text-success' : 'text-dark'}`}></i>
+        <i className={`${className} fs-2 mb-3 ${copiedCode || copiedImage || copiedName ? 'text-success' : 'text-dark'}`}></i>
         
         <div className="w-100 d-flex align-items-center justify-content-center" style={{ height: '30px' }}>
           {isHovered ? (
             <div className="d-flex align-items-center justify-content-center gap-2">
               <button 
                 type="button"
+                className={`btn btn-sm ${copiedName ? 'btn-success text-white' : 'btn-outline-secondary'} rounded-circle d-flex align-items-center justify-content-center p-0`}
+                style={{ width: '28px', height: '28px' }}
+                onClick={handleCopyName}
+                title="Copy Icon Name"
+              >
+                {copiedName ? <i className="bi bi-check-lg" style={{ fontSize: '0.8rem' }}></i> : <i className="fa-regular fa-copy" style={{ fontSize: '0.8rem' }}></i>}
+              </button>
+              <button 
+                type="button"
                 className={`btn btn-sm ${copiedCode ? 'btn-success text-white' : 'btn-outline-secondary'} rounded-circle d-flex align-items-center justify-content-center p-0`}
                 style={{ width: '28px', height: '28px' }}
                 onClick={handleCopyCode}
-                title="Copy code snippet "
+                title="Copy code snippet"
               >
                 {copiedCode ? <i className="bi bi-check-lg" style={{ fontSize: '0.8rem' }}></i> : <i className="bi bi-code-slash" style={{ fontSize: '0.8rem' }}></i>}
               </button>
@@ -160,8 +178,12 @@ const IconCard = ({ iconName, className, snippet, library, style = 'solid' }: Ic
               </button>
             </div>
           ) : (
-            <div className="small text-truncate w-100 fw-medium" title={iconName}>
-              {iconName}
+            <div className="small text-truncate w-100 fw-medium" title={copiedName ? 'Copied!' : iconName}>
+              {copiedName ? (
+                <span className="text-success fw-bold"><i className="bi bi-check2 me-1"></i>Copied!</span>
+              ) : (
+                iconName
+              )}
             </div>
           )}
         </div>
